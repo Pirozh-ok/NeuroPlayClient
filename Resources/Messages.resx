@@ -120,4 +120,13 @@
   <data name="IncorrectUserId" xml:space="preserve">
     <value>Значение идентификатора не может быть пустой строкой или состоять из пробелов</value>
   </data>
+  <data name="IncorrectUserName" xml:space="preserve">
+    <value>Значение ФИО не может быть пустой строкой или состоять из пробелов</value>
+  </data>
+  <data name="IncorrectUserType" xml:space="preserve">
+    <value>Некорректное значение типа! Пожалуйста, выберите значение из выпадающего списка</value>
+  </data>
+  <data name="userDataPath" xml:space="preserve">
+    <value>UserData.txt</value>
+  </data>
 </root>

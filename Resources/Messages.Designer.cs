@@ -68,5 +68,32 @@ namespace NeuroPlayClient.Resources {
                 return ResourceManager.GetString("IncorrectUserId", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Значение ФИО не может быть пустой строкой или состоять из пробелов.
+        /// </summary>
+        internal static string IncorrectUserName {
+            get {
+                return ResourceManager.GetString("IncorrectUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Некорректное значение типа! Пожалуйста, выберите значение из выпадающего списка.
+        /// </summary>
+        internal static string IncorrectUserType {
+            get {
+                return ResourceManager.GetString("IncorrectUserType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на UserData.txt.
+        /// </summary>
+        internal static string userDataPath {
+            get {
+                return ResourceManager.GetString("userDataPath", resourceCulture);
+            }
+        }
     }
 }

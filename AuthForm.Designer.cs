@@ -23,7 +23,6 @@
         /// содержимое этого метода с помощью редактора кода.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.ComboBox cbUserType;
             this.tbUserId = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbUserName = new System.Windows.Forms.TextBox();
@@ -32,7 +31,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.numAge = new System.Windows.Forms.NumericUpDown();
             this.btnStart = new System.Windows.Forms.Button();
-            cbUserType = new System.Windows.Forms.ComboBox();
+            this.cbUserType = new System.Windows.Forms.ComboBox();
+            this.chbRememberMe = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numAge)).BeginInit();
             this.SuspendLayout();
             // 
@@ -110,24 +110,10 @@
             0,
             0});
             // 
-            // cbUserType
-            // 
-            cbUserType.Font = new System.Drawing.Font("Roboto", 12F);
-            cbUserType.FormattingEnabled = true;
-            cbUserType.Items.AddRange(new object[] {
-            "Начальный",
-            "Опытный",
-            "Продвинутый"});
-            cbUserType.Location = new System.Drawing.Point(248, 262);
-            cbUserType.MaxDropDownItems = 3;
-            cbUserType.Name = "cbUserType";
-            cbUserType.Size = new System.Drawing.Size(121, 32);
-            cbUserType.TabIndex = 11;
-            // 
             // btnStart
             // 
             this.btnStart.Font = new System.Drawing.Font("Roboto", 12F);
-            this.btnStart.Location = new System.Drawing.Point(131, 339);
+            this.btnStart.Location = new System.Drawing.Point(149, 364);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(143, 46);
             this.btnStart.TabIndex = 12;
@@ -135,13 +121,39 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // cbUserType
+            // 
+            this.cbUserType.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbUserType.FormattingEnabled = true;
+            this.cbUserType.Items.AddRange(new object[] {
+            "Начальный",
+            "Опытный",
+            "Продвинутый"});
+            this.cbUserType.Location = new System.Drawing.Point(248, 262);
+            this.cbUserType.Name = "cbUserType";
+            this.cbUserType.Size = new System.Drawing.Size(121, 32);
+            this.cbUserType.TabIndex = 14;
+            this.cbUserType.Text = "Начальный";
+            // 
+            // chbRememberMe
+            // 
+            this.chbRememberMe.AutoSize = true;
+            this.chbRememberMe.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chbRememberMe.Location = new System.Drawing.Point(131, 330);
+            this.chbRememberMe.Name = "chbRememberMe";
+            this.chbRememberMe.Size = new System.Drawing.Size(171, 28);
+            this.chbRememberMe.TabIndex = 15;
+            this.chbRememberMe.Text = "Запомнить меня";
+            this.chbRememberMe.UseVisualStyleBackColor = true;
+            // 
             // AuthForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(428, 450);
+            this.Controls.Add(this.chbRememberMe);
+            this.Controls.Add(this.cbUserType);
             this.Controls.Add(this.btnStart);
-            this.Controls.Add(cbUserType);
             this.Controls.Add(this.numAge);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -167,6 +179,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numAge;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.ComboBox cbUserType;
+        private System.Windows.Forms.CheckBox chbRememberMe;
     }
 }
 
