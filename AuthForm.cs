@@ -9,23 +9,30 @@ using System.IO;
 namespace NeuroPlayClient {
     public partial class AuthForm : Form {
         private string[] ListUserType  = new string[] { "Начальный", "Опытный", "Продвинутый" };
-
+        
         public AuthForm() {
             InitializeComponent();
+            ReadUserData();
         }
 
-        private void btnStart_Click(object sender, System.EventArgs e) {
+        private void btnStart_Click(object sender, EventArgs e) {
             if (CheckUserData()) {
                 Enum.TryParse(cbUserType.Text, out UserType userType);
                 var userData = new User(tbUserId.Text, tbUserName.Text, (uint)numAge.Value, userType);
 
                 if (chbRememberMe.Checked) {
-                    SaveUserData(userData);
+                    SaveUserData(new UserSettings() {
+                        Id = userData.Id,
+                        Name = userData.Name,
+                        Age = userData.Age,
+                        UserType = userData.UserType,
+                        RememberMe = chbRememberMe.Checked
+                    });
                 }
             }
         }
 
-        public bool CheckUserData() {
+        private bool CheckUserData() {
             if (string.IsNullOrEmpty(tbUserId.Text) || string.IsNullOrWhiteSpace(tbUserId.Text)) {
                 ShowError(Messages.IncorrectUserId);
                 return false;
@@ -44,15 +51,32 @@ namespace NeuroPlayClient {
             return true;
         }
 
-        public void ShowError(string message) {
+        private void ShowError(string message) {
             MessageBox.Show(message);
         }
 
-        public async void SaveUserData(User userData) {
-            var json = JsonConvert.SerializeObject(userData);
+        private async void SaveUserData(UserSettings data) {
+            var json = JsonConvert.SerializeObject(data);
 
             using (var sw = new StreamWriter(Messages.userDataPath)) {
                 await sw.WriteAsync(json);
+            }
+        }
+
+        private void ReadUserData() {
+            try {
+                using (var sr = new StreamReader(Messages.userDataPath)) {
+                    var json = sr.ReadToEnd();
+                    var user = JsonConvert.DeserializeObject<UserSettings>(json);
+                    tbUserId.Text = user.Id;
+                    tbUserName.Text = user.Name;
+                    cbUserType.Text = user.UserType.ToString();
+                    numAge.Value = user.Age;
+                    chbRememberMe.Checked = user.RememberMe;
+                }
+            }
+            catch (Exception) {
+                return;
             }
         }
     }
