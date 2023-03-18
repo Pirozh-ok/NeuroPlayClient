@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NeuroPlayClient.Services {
-    public class NeuroPlayServices : INeuroPlayServices {
+    public class NeuroPlayService : INeuroPlayService {
 
         public void AddMarker() {
             throw new System.NotImplementedException();
@@ -12,6 +12,7 @@ namespace NeuroPlayClient.Services {
         public async Task<int> GetCountDevices() {
             using (var client = new HttpClient()) {
                 var result = await client.GetAsync(Urls.GetCountDevices);
+                return 0;
             };
         }
 

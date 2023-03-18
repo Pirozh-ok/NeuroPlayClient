@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.IO;
+using NeuroPlayClient.Forms;
 
 namespace NeuroPlayClient {
     public partial class AuthForm : Form {
@@ -29,6 +30,13 @@ namespace NeuroPlayClient {
                         RememberMe = chbRememberMe.Checked
                     });
                 }
+
+                var mainForm = new MainForm() {
+                    UserData = userData
+                };
+
+                this.Hide();
+                mainForm.Show();
             }
         }
 

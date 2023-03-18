@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NeuroPlayClient.Services;
 
 namespace NeuroPlayClient {
     internal static class Program {
@@ -13,7 +16,19 @@ namespace NeuroPlayClient {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AuthForm());
+
+            var host = CreateHostBuilder().Build();
+            ServiceProvider = host.Services;
+            Application.Run(ServiceProvider.GetRequiredService<AuthForm>());
+        }
+
+        public static IServiceProvider ServiceProvider { get; private set; }
+        static IHostBuilder CreateHostBuilder() {
+            return Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) => {
+                    services.AddTransient<INeuroPlayService, NeuroPlayService>();
+                    services.AddTransient<AuthForm>();
+                });
         }
     }
 }
