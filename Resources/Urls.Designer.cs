@@ -22,7 +22,7 @@ namespace NeuroPlayClient.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Urls {
+    public class Urls {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace NeuroPlayClient.Resources {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NeuroPlayClient.Resources.Urls", typeof(Urls).Assembly);
@@ -51,7 +51,7 @@ namespace NeuroPlayClient.Resources {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,20 +61,74 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/AddEDFAnnotation?text={text}.
+        /// </summary>
+        public static string AddMarker {
+            get {
+                return ResourceManager.GetString("AddMarker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/continueRecord.
+        /// </summary>
+        public static string ContinueRecord {
+            get {
+                return ResourceManager.GetString("ContinueRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336.
         /// </summary>
-        internal static string DefaultUrl {
+        public static string DefaultUrl {
             get {
                 return ResourceManager.GetString("DefaultUrl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/DeviceCount.
+        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/deviceCount.
         /// </summary>
-        internal static string GetCountDevices {
+        public static string GetCountDevices {
             get {
                 return ResourceManager.GetString("GetCountDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/currentDeviceInfo.
+        /// </summary>
+        public static string GetCurrentDevice {
+            get {
+                return ResourceManager.GetString("GetCurrentDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/pauseRecord.
+        /// </summary>
+        public static string PauseRecord {
+            get {
+                return ResourceManager.GetString("PauseRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/startRecord.
+        /// </summary>
+        public static string StartRecord {
+            get {
+                return ResourceManager.GetString("StartRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/stopRecord.
+        /// </summary>
+        public static string StopRecord {
+            get {
+                return ResourceManager.GetString("StopRecord", resourceCulture);
             }
         }
     }

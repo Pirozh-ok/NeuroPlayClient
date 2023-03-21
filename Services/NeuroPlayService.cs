@@ -1,30 +1,31 @@
 ﻿using NeuroPlayClient.Resources;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NeuroPlayClient.Services {
     public class NeuroPlayService : INeuroPlayService {
 
-        public void AddMarker() {
+        public Task AddMarkerAsync() {
             throw new System.NotImplementedException();
         }
 
-        public async Task<int> GetCountDevices() {
+        public async Task<bool> IsConnectedAsync() {
             using (var client = new HttpClient()) {
-                var result = await client.GetAsync(Urls.GetCountDevices);
-                return 0;
-            };
+                var result = await client.GetAsync(Urls.GetCurrentDevice);
+                var obj = JsonConvert.DeserializeObject(result.Content);
+                if ((bool)obj.GetField("result")) {
+                    return true;
+                }
+                return true;
+            }
         }
 
-        public bool IsConnected() {
+        public Task StartRecordAsync() {
             throw new System.NotImplementedException();
         }
 
-        public void StartRecord() {
-            throw new System.NotImplementedException();
-        }
-
-        public void StopRecord() {
+        public Task StopRecordAsync() {
             throw new System.NotImplementedException();
         }
     }

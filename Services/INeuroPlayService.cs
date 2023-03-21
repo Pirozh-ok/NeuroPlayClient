@@ -2,10 +2,9 @@
 
 namespace NeuroPlayClient.Services {
     internal interface INeuroPlayService {
-        bool IsConnected();
-        Task<int> GetCountDevices();
-        void StartRecord();
-        void StopRecord();
-        void AddMarker();
+        Task<bool> IsConnectedAsync();
+        Task StartRecordAsync();
+        Task StopRecordAsync();
+        Task AddMarkerAsync();
     }
 }

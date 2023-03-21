@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddMarker" xml:space="preserve">
+    <value>http://127.0.0.1:2336/AddEDFAnnotation?text={text}</value>
+  </data>
+  <data name="ContinueRecord" xml:space="preserve">
+    <value>http://127.0.0.1:2336/continueRecord</value>
+  </data>
   <data name="DefaultUrl" xml:space="preserve">
     <value>http://127.0.0.1:2336</value>
   </data>
   <data name="GetCountDevices" xml:space="preserve">
-    <value>http://127.0.0.1:2336/DeviceCount</value>
+    <value>http://127.0.0.1:2336/deviceCount</value>
+  </data>
+  <data name="GetCurrentDevice" xml:space="preserve">
+    <value>http://127.0.0.1:2336/currentDeviceInfo</value>
+  </data>
+  <data name="PauseRecord" xml:space="preserve">
+    <value>http://127.0.0.1:2336/pauseRecord</value>
+  </data>
+  <data name="StartRecord" xml:space="preserve">
+    <value>http://127.0.0.1:2336/startRecord</value>
+  </data>
+  <data name="StopRecord" xml:space="preserve">
+    <value>http://127.0.0.1:2336/stopRecord</value>
   </data>
 </root>
