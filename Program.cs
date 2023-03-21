@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NeuroPlayClient.Forms;
 using NeuroPlayClient.Services;
 
 namespace NeuroPlayClient {
-    internal static class Program {
+    public static class Program {
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -28,6 +29,8 @@ namespace NeuroPlayClient {
                 .ConfigureServices((context, services) => {
                     services.AddTransient<INeuroPlayService, NeuroPlayService>();
                     services.AddTransient<AuthForm>();
+                    services.AddTransient<MainForm>();
+                    services.AddTransient<Experiment1Form>();
                 });
         }
     }

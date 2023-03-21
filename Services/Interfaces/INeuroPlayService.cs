@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 namespace NeuroPlayClient.Services {
-    internal interface INeuroPlayService {
+    public interface INeuroPlayService {
         Task<bool> IsConnectedAsync();
         Task StartRecordAsync();
         Task StopRecordAsync();

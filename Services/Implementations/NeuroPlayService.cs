@@ -13,10 +13,10 @@ namespace NeuroPlayClient.Services {
         public async Task<bool> IsConnectedAsync() {
             using (var client = new HttpClient()) {
                 var result = await client.GetAsync(Urls.GetCurrentDevice);
-                var obj = JsonConvert.DeserializeObject(result.Content);
-                if ((bool)obj.GetField("result")) {
-                    return true;
-                }
+                //var obj = JsonConvert.DeserializeObject(result.Content);
+                //if ((bool)obj.GetField("result")) {
+                //    return true;
+                //}
                 return true;
             }
         }

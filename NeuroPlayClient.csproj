@@ -193,6 +193,12 @@
     <Compile Include="Forms\AuthForm.Designer.cs">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Experiment1Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Experiment1Form.Designer.cs">
+      <DependentUpon>Experiment1Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +206,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\GetCountDeviceDto.cs" />
+    <Compile Include="Models\Settings1Experiment.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserSettings.cs" />
     <Compile Include="Program.cs" />
@@ -214,10 +221,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Urls.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\INeuroPlayService.cs" />
-    <Compile Include="Services\NeuroPlayService.cs" />
+    <Compile Include="Services\Implementations\ExperimentService.cs" />
+    <Compile Include="Services\Interfaces\IExperimentService.cs" />
+    <Compile Include="Services\Interfaces\INeuroPlayService.cs" />
+    <Compile Include="Services\Implementations\NeuroPlayService.cs" />
     <EmbeddedResource Include="Forms\AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Experiment1Form.resx">
+      <DependentUpon>Experiment1Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
