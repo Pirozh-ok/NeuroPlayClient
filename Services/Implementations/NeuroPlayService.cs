@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 namespace NeuroPlayClient.Services {
     public class NeuroPlayService : INeuroPlayService {
 
-        public Task AddMarkerAsync() {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<bool> IsConnectedAsync() {
             using (var client = new HttpClient()) {
                 var result = await client.GetAsync(Urls.GetCurrentDevice);
@@ -21,12 +17,22 @@ namespace NeuroPlayClient.Services {
             }
         }
 
-        public Task StartRecordAsync() {
-            throw new System.NotImplementedException();
+        public async Task StartRecordAsync() {
+            using (var client = new HttpClient()) {
+                await client.GetAsync(Urls.StartRecord);
+            }
         }
 
-        public Task StopRecordAsync() {
-            throw new System.NotImplementedException();
+        public async Task StopRecordAsync() {
+            using (var client = new HttpClient()) {
+                await client.GetAsync(Urls.StopRecord);
+            }
+        }
+
+        public async Task AddMarkerAsync(string position, string text) {
+            using (var client = new HttpClient()) {
+                await client.GetAsync($"http://127.0.0.1:2336/AddEDFAnnotation?pos={position}&text={text}");
+            }
         }
     }
 }

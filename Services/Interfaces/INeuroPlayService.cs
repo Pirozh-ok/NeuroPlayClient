@@ -5,6 +5,6 @@ namespace NeuroPlayClient.Services {
         Task<bool> IsConnectedAsync();
         Task StartRecordAsync();
         Task StopRecordAsync();
-        Task AddMarkerAsync();
+        Task AddMarkerAsync(string position, string text);
     }
 }

@@ -61,7 +61,7 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/AddEDFAnnotation?text={text}.
+        ///   Ищет локализованную строку, похожую на http://127.0.0.1:2336/AddEDFAnnotation?pos={pos}&amp;text={text}.
         /// </summary>
         public static string AddMarker {
             get {

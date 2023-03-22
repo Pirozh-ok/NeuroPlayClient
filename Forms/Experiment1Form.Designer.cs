@@ -58,6 +58,7 @@
             // 
             // timerCurrentTime
             // 
+            this.timerCurrentTime.Interval = 1;
             this.timerCurrentTime.Tick += new System.EventHandler(this.timerCurrentTime_Tick);
             // 
             // label1
@@ -78,9 +79,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbCurrentTime);
             this.Controls.Add(this.pbImage);
+            this.KeyPreview = true;
             this.Name = "Experiment1Form";
             this.Text = "Формирование внешних стимулов при помощи изображений";
             this.Load += new System.EventHandler(this.Experiment1Form_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Experiment1Form_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

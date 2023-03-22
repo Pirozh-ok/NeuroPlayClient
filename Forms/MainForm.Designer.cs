@@ -26,13 +26,10 @@
             this.tcMethodsResearch = new System.Windows.Forms.TabControl();
             this.tabPictureMethod = new System.Windows.Forms.TabPage();
             this.btnStart = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.rbtnTimeExperiment = new System.Windows.Forms.RadioButton();
-            this.rbtnCountIteration = new System.Windows.Forms.RadioButton();
             this.nudDelay = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.nudTimeOrCountIteration = new System.Windows.Forms.NumericUpDown();
+            this.nudTime = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,11 +37,11 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tbCountIteration = new System.Windows.Forms.TextBox();
             this.tcMethodsResearch.SuspendLayout();
             this.tabPictureMethod.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudTimeOrCountIteration)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTime)).BeginInit();
             this.SuspendLayout();
             // 
             // tcMethodsResearch
@@ -61,12 +58,12 @@
             // 
             // tabPictureMethod
             // 
+            this.tabPictureMethod.Controls.Add(this.tbCountIteration);
             this.tabPictureMethod.Controls.Add(this.btnStart);
-            this.tabPictureMethod.Controls.Add(this.panel2);
             this.tabPictureMethod.Controls.Add(this.nudDelay);
             this.tabPictureMethod.Controls.Add(this.label6);
             this.tabPictureMethod.Controls.Add(this.label5);
-            this.tabPictureMethod.Controls.Add(this.nudTimeOrCountIteration);
+            this.tabPictureMethod.Controls.Add(this.nudTime);
             this.tabPictureMethod.Controls.Add(this.label4);
             this.tabPictureMethod.Controls.Add(this.label3);
             this.tabPictureMethod.Controls.Add(this.label2);
@@ -90,35 +87,6 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.rbtnTimeExperiment);
-            this.panel2.Controls.Add(this.rbtnCountIteration);
-            this.panel2.Location = new System.Drawing.Point(234, 188);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(33, 81);
-            this.panel2.TabIndex = 12;
-            // 
-            // rbtnTimeExperiment
-            // 
-            this.rbtnTimeExperiment.AutoSize = true;
-            this.rbtnTimeExperiment.Checked = true;
-            this.rbtnTimeExperiment.Location = new System.Drawing.Point(3, 3);
-            this.rbtnTimeExperiment.Name = "rbtnTimeExperiment";
-            this.rbtnTimeExperiment.Size = new System.Drawing.Size(17, 16);
-            this.rbtnTimeExperiment.TabIndex = 0;
-            this.rbtnTimeExperiment.TabStop = true;
-            this.rbtnTimeExperiment.UseVisualStyleBackColor = true;
-            // 
-            // rbtnCountIteration
-            // 
-            this.rbtnCountIteration.AutoSize = true;
-            this.rbtnCountIteration.Location = new System.Drawing.Point(3, 61);
-            this.rbtnCountIteration.Name = "rbtnCountIteration";
-            this.rbtnCountIteration.Size = new System.Drawing.Size(17, 16);
-            this.rbtnCountIteration.TabIndex = 11;
-            this.rbtnCountIteration.UseVisualStyleBackColor = true;
-            // 
             // nudDelay
             // 
             this.nudDelay.DecimalPlaces = 2;
@@ -127,7 +95,7 @@
             0,
             0,
             131072});
-            this.nudDelay.Location = new System.Drawing.Point(283, 323);
+            this.nudDelay.Location = new System.Drawing.Point(251, 262);
             this.nudDelay.Name = "nudDelay";
             this.nudDelay.Size = new System.Drawing.Size(120, 30);
             this.nudDelay.TabIndex = 8;
@@ -136,50 +104,52 @@
             0,
             0,
             0});
+            this.nudDelay.ValueChanged += new System.EventHandler(this.nudDelay_ValueChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(22, 312);
+            this.label6.Location = new System.Drawing.Point(22, 248);
             this.label6.MaximumSize = new System.Drawing.Size(215, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(177, 66);
+            this.label6.Size = new System.Drawing.Size(168, 44);
             this.label6.TabIndex = 7;
-            this.label6.Text = "Задержка между показами картинок (сек)";
+            this.label6.Text = "Время показа изображения (сек)";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(22, 247);
+            this.label5.Location = new System.Drawing.Point(22, 318);
             this.label5.MaximumSize = new System.Drawing.Size(215, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(193, 22);
+            this.label5.Size = new System.Drawing.Size(212, 22);
             this.label5.TabIndex = 5;
-            this.label5.Text = "Количество итераций";
+            this.label5.Text = "Количество повторений";
             // 
-            // nudTimeOrCountIteration
+            // nudTime
             // 
-            this.nudTimeOrCountIteration.Location = new System.Drawing.Point(283, 227);
-            this.nudTimeOrCountIteration.Maximum = new decimal(new int[] {
+            this.nudTime.Location = new System.Drawing.Point(251, 202);
+            this.nudTime.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.nudTimeOrCountIteration.Minimum = new decimal(new int[] {
+            this.nudTime.Minimum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.nudTimeOrCountIteration.Name = "nudTimeOrCountIteration";
-            this.nudTimeOrCountIteration.Size = new System.Drawing.Size(120, 30);
-            this.nudTimeOrCountIteration.TabIndex = 4;
-            this.nudTimeOrCountIteration.Value = new decimal(new int[] {
+            this.nudTime.Name = "nudTime";
+            this.nudTime.Size = new System.Drawing.Size(120, 30);
+            this.nudTime.TabIndex = 4;
+            this.nudTime.Value = new decimal(new int[] {
             10,
             0,
             0,
             0});
+            this.nudTime.ValueChanged += new System.EventHandler(this.nudTimeOrCountIteration_ValueChanged);
             // 
             // label4
             // 
@@ -251,6 +221,14 @@
             this.panel1.Size = new System.Drawing.Size(157, 434);
             this.panel1.TabIndex = 1;
             // 
+            // tbCountIteration
+            // 
+            this.tbCountIteration.Location = new System.Drawing.Point(251, 318);
+            this.tbCountIteration.Name = "tbCountIteration";
+            this.tbCountIteration.ReadOnly = true;
+            this.tbCountIteration.Size = new System.Drawing.Size(120, 30);
+            this.tbCountIteration.TabIndex = 14;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -264,10 +242,8 @@
             this.tcMethodsResearch.ResumeLayout(false);
             this.tabPictureMethod.ResumeLayout(false);
             this.tabPictureMethod.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudTimeOrCountIteration)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTime)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -281,15 +257,13 @@
         private System.Windows.Forms.NumericUpDown nudDelay;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown nudTimeOrCountIteration;
+        private System.Windows.Forms.NumericUpDown nudTime;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.RadioButton rbtnTimeExperiment;
-        private System.Windows.Forms.RadioButton rbtnCountIteration;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.TextBox tbCountIteration;
     }
 }

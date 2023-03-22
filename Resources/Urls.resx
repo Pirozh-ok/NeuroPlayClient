@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddMarker" xml:space="preserve">
-    <value>http://127.0.0.1:2336/AddEDFAnnotation?text={text}</value>
+    <value>http://127.0.0.1:2336/AddEDFAnnotation?pos={pos}&amp;text={text}</value>
   </data>
   <data name="ContinueRecord" xml:space="preserve">
     <value>http://127.0.0.1:2336/continueRecord</value>

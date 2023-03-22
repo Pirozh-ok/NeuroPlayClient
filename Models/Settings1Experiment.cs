@@ -1,9 +1,10 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace NeuroPlayClient.Models {
     public class Settings1Experiment {
-        public bool IsTime { get; set; }
-        public int TimeInSecondsOrCountIteration { get; set; }
+        public int TimeInSeconds { get; set; }
+        public int CountIteration { get => (int)Math.Floor(TimeInSeconds / DelayInSeconds); }
         public double DelayInSeconds { get; set; }
     }
 }
