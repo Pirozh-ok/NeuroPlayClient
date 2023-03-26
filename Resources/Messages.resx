@@ -126,6 +126,9 @@
   <data name="IncorrectUserType" xml:space="preserve">
     <value>Некорректное значение типа! Пожалуйста, выберите значение из выпадающего списка</value>
   </data>
+  <data name="IsNotConnected" xml:space="preserve">
+    <value>Не удалось установить соединение к серверу NeuroPlay. Подключитесь к устройству и повторите попытку!</value>
+  </data>
   <data name="userDataPath" xml:space="preserve">
     <value>UserData.txt</value>
   </data>

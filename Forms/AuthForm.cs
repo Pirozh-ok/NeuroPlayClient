@@ -10,8 +10,10 @@ using NeuroPlayClient.Forms;
 namespace NeuroPlayClient {
     public partial class AuthForm : Form {
         private string[] ListUserType  = new string[] { "Начальный", "Опытный", "Продвинутый" };
-        
-        public AuthForm() {
+        private MainForm _mainForm;
+
+        public AuthForm(MainForm mainForm) {
+            _mainForm = mainForm;
             InitializeComponent();
             ReadUserData();
         }
@@ -31,12 +33,9 @@ namespace NeuroPlayClient {
                     });
                 }
 
-                var mainForm = new MainForm() {
-                    UserData = userData
-                };
-
+                _mainForm.UserData = userData;
                 this.Hide();
-                mainForm.Show();
+                _mainForm.Show();
             }
         }
 

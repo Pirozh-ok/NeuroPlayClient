@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NeuroPlayClient.Forms {
+    public class TimesMarker {
+        public DateTime TimeShowImages { get; set; }
+        public DateTime? TimePressKey { get; set; }
+    }
+
     public partial class Experiment1Form : Form {
         public Settings1Experiment Settings { get; set; }
         private Random _rnd;
@@ -16,10 +21,10 @@ namespace NeuroPlayClient.Forms {
         private int _cleanDelayInMs = 200;
         private DateTime _startTime;
         private List<bool> flagsImages = new List<bool>();
-        private List<DateTime> timesShowImages = new List<DateTime>();
-        private List<DateTime> timesPressButton = new List<DateTime>();
+        private TimesMarker [] _markers;
         private List<int> times1 = new List<int>();
-        private int _currentElement = 0; 
+        private int _currentImages = 0;
+        private List<string> list = new List<string>();
 
         public Experiment1Form(INeuroPlayService neuroPlayService) {
             InitializeComponent();
@@ -29,13 +34,16 @@ namespace NeuroPlayClient.Forms {
 
         private async Task Experiment1WithLimetedTime() {
             _currentTimeInMs = 0;
-            _currentElement = 0;
+            _currentImages = 0;
             _durationExperiment = Settings.TimeInSeconds * 1000;
             _startTime = DateTime.Now;
             int countShowPicture = Settings.CountIteration;
-
-            for(int i = 0; i < countShowPicture+1000; i++) {
+            //переделать, когда разберусь с точным количеством картинок
+            _markers = new TimesMarker[countShowPicture+10];
+            //переделать, когда разберусь с точным количеством картинок
+            for (int i = 0; i < countShowPicture+10; i++) {
                 flagsImages.Add(_rnd.Next() % 2 == 0);
+                _markers[i] = new TimesMarker();
             }
 
             timerCurrentTime.Interval = 100;
@@ -53,16 +61,15 @@ namespace NeuroPlayClient.Forms {
             pbImage.Image = null;
             await Task.Delay(_cleanDelayInMs);
 
-            if (flagsImages[_currentElement]) {
+            if (flagsImages[_currentImages]) {
                 pbImage.Image = Image.FromFile("../../Images/green-circle.png");
-                await _neuroPlayService.AddMarkerAsync((DateTime.Now - _startTime).Milliseconds.ToString(), "Show green circle");
+                _markers[_currentImages].TimeShowImages = DateTime.Now;
             }
             else {
                 pbImage.Image = Image.FromFile("../../Images/red-circle.png");
-                await _neuroPlayService.AddMarkerAsync((DateTime.Now - _startTime).Milliseconds.ToString(), "Show red circle");
+                _markers[_currentImages].TimeShowImages = DateTime.Now;
             }
-            timesShowImages.Add(DateTime.Now);
-            _currentElement++;
+            _currentImages++;
         }
 
         private async void timerCurrentTime_Tick(object sender, EventArgs e) {
@@ -73,24 +80,38 @@ namespace NeuroPlayClient.Forms {
             if (_currentTimeInMs >= _durationExperiment) {
                 timer.Stop();
                 timerCurrentTime.Stop();
-                await _neuroPlayService.StopRecordAsync();
-                MessageBox.Show("Эксперимент закончен");
 
-                //AddMarks();
+                if(await AddMarkers()) {
+                    await _neuroPlayService.StopRecordAsync();
+                }
+
+                //await AddMarkers();
+                //await _neuroPlayService.StopRecordAsync();
             }
         }
 
-        //private void AddMarks() {
-        //    for(int i = 0; i < timesShowImages.Count; i++) {
-        //        long timeShowInMs = (timesShowImages[i] - _startTime).Milliseconds;
-        //        long timePressSpaceInMs = (timesPressButton[i] - _startTime).Milliseconds;
-        //    }
-        //}
+        private async Task<bool> AddMarkers() {
+            for (int i = 0; i < _currentImages; i++) {
+                if (_markers[i].TimeShowImages != default) {
+                    string timeShowInMs = Math.Round((_markers[i].TimeShowImages - _startTime).TotalMilliseconds).ToString();
+                    // Show green circle - 1, Show red circle - 0
+                    string text = flagsImages[i] ? "1" : "0";
+                    await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
 
-        private async void Experiment1Form_KeyDown(object sender, KeyEventArgs e) {
+                    if (_markers[i].TimePressKey != null) {
+                        string timePressKeyInMs = Math.Round(((DateTime)_markers[i].TimePressKey - _startTime).TotalMilliseconds).ToString();
+                        // User pressed space - 2
+                        await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, "2");
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private void Experiment1Form_KeyDown(object sender, KeyEventArgs e) {
             if(e.KeyCode == Keys.Space) {
-                await _neuroPlayService.AddMarkerAsync((DateTime.Now - _startTime).Milliseconds.ToString(), "User pressed space");
-                timesPressButton.Add(DateTime.Now);
+                _markers[_currentImages].TimePressKey = DateTime.Now;
             }
         }
     }

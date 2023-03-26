@@ -193,9 +193,7 @@
     <Compile Include="Forms\AuthForm.Designer.cs">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Experiment1Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\Experiment1Form.cs" />
     <Compile Include="Forms\Experiment1Form.Designer.cs">
       <DependentUpon>Experiment1Form.cs</DependentUpon>
     </Compile>
@@ -205,7 +203,10 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\GetCountDeviceDto.cs" />
+    <Compile Include="Models\JsonResponseModels\AddMarkerResponse.cs" />
+    <Compile Include="Models\JsonResponseModels\CurrentDeviceResponse.cs" />
+    <Compile Include="Models\JsonResponseModels\StartRecordResponse.cs" />
+    <Compile Include="Models\JsonResponseModels\StopRecordResponse.cs" />
     <Compile Include="Models\Settings1Experiment.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserSettings.cs" />
@@ -265,5 +266,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

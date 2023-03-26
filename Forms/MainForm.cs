@@ -1,15 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeuroPlayClient.Models;
+using NeuroPlayClient.Resources;
+using NeuroPlayClient.Services;
 using System;
 using System.Windows.Forms;
 
 namespace NeuroPlayClient.Forms {
     public partial class MainForm : Form {
         public User UserData { get; set; }
-       
+       private readonly INeuroPlayService _neuroPlayService;
 
-        public MainForm() {
+        public MainForm(INeuroPlayService neuroPlayService) {
             InitializeComponent();
+            _neuroPlayService = neuroPlayService;
             tbCountIteration.Text = ((int)Math.Floor((double)nudTime.Value / (double)nudDelay.Value)).ToString();
         }
 
@@ -17,15 +20,21 @@ namespace NeuroPlayClient.Forms {
             Application.Exit();
         }
 
-        private void btnStart_Click(object sender, EventArgs e) {
+        private async void btnStart_Click(object sender, EventArgs e) {
             var setting = new Settings1Experiment() {
                 TimeInSeconds = int.Parse(nudTime.Value.ToString()),
                 DelayInSeconds = double.Parse(nudDelay.Value.ToString()),
             };
 
-            var formExperiment = Program.ServiceProvider.GetRequiredService<Experiment1Form>();
-            formExperiment.Settings = setting;
-            formExperiment.Show();
+            if (await _neuroPlayService.IsConnectedAsync()) {
+                var formExperiment = Program.ServiceProvider.GetRequiredService<Experiment1Form>();
+                formExperiment.Settings = setting;
+                formExperiment.Show();
+            }
+            else {
+                MessageBox.Show(Messages.IsNotConnected);
+                return;
+            }
         }
 
         private void nudTimeOrCountIteration_ValueChanged(object sender, EventArgs e) {

@@ -88,6 +88,15 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Не удалось установить соединение к серверу NeuroPlay. Подключитесь к устройству и повторите попытку!.
+        /// </summary>
+        internal static string IsNotConnected {
+            get {
+                return ResourceManager.GetString("IsNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на UserData.txt.
         /// </summary>
         internal static string userDataPath {
