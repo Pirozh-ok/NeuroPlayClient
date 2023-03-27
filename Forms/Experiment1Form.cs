@@ -3,6 +3,7 @@ using NeuroPlayClient.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -25,6 +26,7 @@ namespace NeuroPlayClient.Forms {
         private List<int> times1 = new List<int>();
         private int _currentImages = 0;
         private List<string> list = new List<string>();
+        private StreamWriter sw;
 
         public Experiment1Form(INeuroPlayService neuroPlayService) {
             InitializeComponent();
@@ -50,6 +52,7 @@ namespace NeuroPlayClient.Forms {
             timer.Interval = (int)(Settings.DelayInSeconds * 1000 - _cleanDelayInMs);
             timer.Start();
             timerCurrentTime.Start();
+            sw = new StreamWriter("C:\\Users\\Ivan\\source\\repos\\NeuroPlayClient\\logs.txt", false);
             await _neuroPlayService.StartRecordAsync();
         }
 
@@ -85,6 +88,7 @@ namespace NeuroPlayClient.Forms {
                     await _neuroPlayService.StopRecordAsync();
                 }
 
+                sw.Close();
                 //await AddMarkers();
                 //await _neuroPlayService.StopRecordAsync();
             }
@@ -96,12 +100,14 @@ namespace NeuroPlayClient.Forms {
                     string timeShowInMs = Math.Round((_markers[i].TimeShowImages - _startTime).TotalMilliseconds).ToString();
                     // Show green circle - 1, Show red circle - 0
                     string text = flagsImages[i] ? "1" : "0";
-                    await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
+                    var result = await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
+                    sw.WriteLine($"position - {timeShowInMs}; text - {text}; result - {result}");
 
                     if (_markers[i].TimePressKey != null) {
                         string timePressKeyInMs = Math.Round(((DateTime)_markers[i].TimePressKey - _startTime).TotalMilliseconds).ToString();
                         // User pressed space - 2
-                        await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, "2");
+                        var result1 = await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, "2");
+                        sw.WriteLine($"position - {timePressKeyInMs}; user pressed space; result - {result1}");
                     }
                 }
             }

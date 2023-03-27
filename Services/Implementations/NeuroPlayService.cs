@@ -29,11 +29,13 @@ namespace NeuroPlayClient.Services {
             }
         }
 
-        public async Task<bool> AddMarkerAsync(string position, string text) {
+        public async Task<string> AddMarkerAsync(string position, string text) {
             using (var client = new HttpClient()) {
-                 var response = await client.GetAsync($"http://127.0.0.1:2336/AddEDFAnnotation?text={text}&pos={position}");
-                var result = JsonConvert.DeserializeObject<AddMarkerResponse>(await response.Content.ReadAsStringAsync());
-                return result.result;
+                var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:2336/AddEDFAnnotation?text={text}&pos={position}"));
+                //var response = await client.GetAsync($"http://127.0.0.1:2336/AddEDFAnnotation?text={text}&pos={position}");
+                //var result = JsonConvert.DeserializeObject<AddMarkerResponse>(await response.Content.ReadAsStringAsync());
+                //return result.result;
+                return await response.Content.ReadAsStringAsync();
             }
         }
     }

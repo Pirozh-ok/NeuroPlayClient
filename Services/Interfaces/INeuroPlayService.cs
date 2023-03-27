@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace NeuroPlayClient.Services {
     public interface INeuroPlayService {
@@ -6,6 +7,6 @@ namespace NeuroPlayClient.Services {
         Task StartRecordAsync();
         Task StopRecordAsync();
         //Task<bool> AddMarkerAsync(string position, string text);
-        Task<bool> AddMarkerAsync(string position, string text);
+        Task<string> AddMarkerAsync(string position, string text);
     }
 }
