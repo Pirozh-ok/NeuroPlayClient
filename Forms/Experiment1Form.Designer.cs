@@ -29,6 +29,7 @@
             this.tbCurrentTime = new System.Windows.Forms.TextBox();
             this.timerCurrentTime = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.timerStopExperiment = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,6 +72,10 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Текущее время";
             // 
+            // timerStopExperiment
+            // 
+            this.timerStopExperiment.Tick += new System.EventHandler(this.timerStopExperiment_Tick);
+            // 
             // Experiment1Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -97,5 +102,6 @@
         private System.Windows.Forms.TextBox tbCurrentTime;
         private System.Windows.Forms.Timer timerCurrentTime;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timerStopExperiment;
     }
 }

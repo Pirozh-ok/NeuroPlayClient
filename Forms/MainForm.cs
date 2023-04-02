@@ -26,14 +26,19 @@ namespace NeuroPlayClient.Forms {
                 DelayInSeconds = double.Parse(nudDelay.Value.ToString()),
             };
 
-            if (await _neuroPlayService.IsConnectedAsync()) {
-                var formExperiment = Program.ServiceProvider.GetRequiredService<Experiment1Form>();
-                formExperiment.Settings = setting;
-                formExperiment.Show();
+            try {
+                if (await _neuroPlayService.IsConnectedAsync()) {
+                    var formExperiment = Program.ServiceProvider.GetRequiredService<Experiment1Form>();
+                    formExperiment.Settings = setting;
+                    formExperiment.Show();
+                }
+                else {
+                    MessageBox.Show(Messages.IsNotConnected);
+                    return;
+                }
             }
-            else {
+            catch {
                 MessageBox.Show(Messages.IsNotConnected);
-                return;
             }
         }
 

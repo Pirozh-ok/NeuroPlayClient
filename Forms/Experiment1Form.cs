@@ -8,11 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NeuroPlayClient.Forms {
-    public class TimesMarker {
-        public DateTime TimeShowImages { get; set; }
-        public DateTime? TimePressKey { get; set; }
-    }
-
     public partial class Experiment1Form : Form {
         public Settings1Experiment Settings { get; set; }
         private Random _rnd;
@@ -41,19 +36,24 @@ namespace NeuroPlayClient.Forms {
             _startTime = DateTime.Now;
             int countShowPicture = Settings.CountIteration;
             //переделать, когда разберусь с точным количеством картинок
-            _markers = new TimesMarker[countShowPicture+10];
+            _markers = new TimesMarker[countShowPicture];
             //переделать, когда разберусь с точным количеством картинок
-            for (int i = 0; i < countShowPicture+10; i++) {
+            for (int i = 0; i < countShowPicture; i++) {
                 flagsImages.Add(_rnd.Next() % 2 == 0);
                 _markers[i] = new TimesMarker();
             }
 
-            timerCurrentTime.Interval = 100;
-            timer.Interval = (int)(Settings.DelayInSeconds * 1000 - _cleanDelayInMs);
+            timerCurrentTime.Interval = 10;
+            timer.Interval = (int)(Settings.DelayInSeconds * 1000);
+            timerStopExperiment.Interval = Settings.TimeInSeconds * 1000 + 400;
             timer.Start();
             timerCurrentTime.Start();
+            timerStopExperiment.Start();
             sw = new StreamWriter("C:\\Users\\Ivan\\source\\repos\\NeuroPlayClient\\logs.txt", false);
             await _neuroPlayService.StartRecordAsync();
+
+            pbImage.Image = flagsImages[0] ? Image.FromFile("../../Images/green-circle.png") : Image.FromFile("../../Images/red-circle.png");
+            _markers[_currentImages].TimeShowImages = DateTime.Now;
         }
 
         private async void Experiment1Form_Load(object sender, EventArgs e) {
@@ -64,34 +64,18 @@ namespace NeuroPlayClient.Forms {
             pbImage.Image = null;
             await Task.Delay(_cleanDelayInMs);
 
-            if (flagsImages[_currentImages]) {
-                pbImage.Image = Image.FromFile("../../Images/green-circle.png");
+            pbImage.Image = flagsImages[_currentImages] ? Image.FromFile("../../Images/green-circle.png") :
+                                                          Image.FromFile("../../Images/red-circle.png");
+
+            if (_currentImages < Settings.CountIteration-1) {
+                _currentImages++;
                 _markers[_currentImages].TimeShowImages = DateTime.Now;
             }
-            else {
-                pbImage.Image = Image.FromFile("../../Images/red-circle.png");
-                _markers[_currentImages].TimeShowImages = DateTime.Now;
-            }
-            _currentImages++;
         }
 
-        private async void timerCurrentTime_Tick(object sender, EventArgs e) {
+        private void timerCurrentTime_Tick(object sender, EventArgs e) {
             _currentTimeInMs += timerCurrentTime.Interval;
             tbCurrentTime.Text = $" {_currentTimeInMs/1000}:{(_currentTimeInMs % 1000)} с";
-            times1.Add(_currentTimeInMs);
-
-            if (_currentTimeInMs >= _durationExperiment) {
-                timer.Stop();
-                timerCurrentTime.Stop();
-
-                if(await AddMarkers()) {
-                    await _neuroPlayService.StopRecordAsync();
-                }
-
-                sw.Close();
-                //await AddMarkers();
-                //await _neuroPlayService.StopRecordAsync();
-            }
         }
 
         private async Task<bool> AddMarkers() {
@@ -117,8 +101,21 @@ namespace NeuroPlayClient.Forms {
 
         private void Experiment1Form_KeyDown(object sender, KeyEventArgs e) {
             if(e.KeyCode == Keys.Space) {
+                //_neuroPlayService.AddMarkerAsync(Math.Round((DateTime.Now - _startTime).TotalMilliseconds).ToString(), "2");
                 _markers[_currentImages].TimePressKey = DateTime.Now;
             }
+        }
+
+        private async void timerStopExperiment_Tick(object sender, EventArgs e) {
+            timer.Stop();
+            timerCurrentTime.Stop();
+            timerStopExperiment.Stop();
+            //await _neuroPlayService.StopRecordAsync();
+
+            if (await AddMarkers()) {
+               await _neuroPlayService.StopRecordAsync();
+            }
+            sw.Close();
         }
     }
 }
