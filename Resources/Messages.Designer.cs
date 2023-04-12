@@ -22,7 +22,7 @@ namespace NeuroPlayClient.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Messages {
+    public class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace NeuroPlayClient.Resources {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NeuroPlayClient.Resources.Messages", typeof(Messages).Assembly);
@@ -51,7 +51,7 @@ namespace NeuroPlayClient.Resources {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,18 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Не удалось получить настройки пользователя.
+        /// </summary>
+        public static string CantReadSettings {
+            get {
+                return ResourceManager.GetString("CantReadSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Значение идентификатора не может быть пустой строкой или состоять из пробелов.
         /// </summary>
-        internal static string IncorrectUserId {
+        public static string IncorrectUserId {
             get {
                 return ResourceManager.GetString("IncorrectUserId", resourceCulture);
             }
@@ -72,7 +81,7 @@ namespace NeuroPlayClient.Resources {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Значение ФИО не может быть пустой строкой или состоять из пробелов.
         /// </summary>
-        internal static string IncorrectUserName {
+        public static string IncorrectUserName {
             get {
                 return ResourceManager.GetString("IncorrectUserName", resourceCulture);
             }
@@ -81,7 +90,7 @@ namespace NeuroPlayClient.Resources {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Некорректное значение типа! Пожалуйста, выберите значение из выпадающего списка.
         /// </summary>
-        internal static string IncorrectUserType {
+        public static string IncorrectUserType {
             get {
                 return ResourceManager.GetString("IncorrectUserType", resourceCulture);
             }
@@ -90,7 +99,7 @@ namespace NeuroPlayClient.Resources {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Не удалось установить соединение к серверу NeuroPlay. Подключитесь к устройству и повторите попытку!.
         /// </summary>
-        internal static string IsNotConnected {
+        public static string IsNotConnected {
             get {
                 return ResourceManager.GetString("IsNotConnected", resourceCulture);
             }
@@ -99,7 +108,7 @@ namespace NeuroPlayClient.Resources {
         /// <summary>
         ///   Ищет локализованную строку, похожую на UserData.txt.
         /// </summary>
-        internal static string userDataPath {
+        public static string userDataPath {
             get {
                 return ResourceManager.GetString("userDataPath", resourceCulture);
             }

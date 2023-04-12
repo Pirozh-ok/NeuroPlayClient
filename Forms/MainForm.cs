@@ -21,25 +21,25 @@ namespace NeuroPlayClient.Forms {
         }
 
         private async void btnStart_Click(object sender, EventArgs e) {
-            var setting = new Settings1Experiment() {
-                TimeInSeconds = int.Parse(nudTime.Value.ToString()),
-                DelayInSeconds = double.Parse(nudDelay.Value.ToString()),
-            };
+            //var setting = new Settings1Experiment() {
+            //    TimeInSeconds = int.Parse(nudTime.Value.ToString()),
+            //    DelayInSeconds = double.Parse(nudDelay.Value.ToString()),
+            //};
 
-            try {
-                if (await _neuroPlayService.IsConnectedAsync()) {
-                    var formExperiment = Program.ServiceProvider.GetRequiredService<Experiment1Form>();
-                    formExperiment.Settings = setting;
-                    formExperiment.Show();
-                }
-                else {
-                    MessageBox.Show(Messages.IsNotConnected);
-                    return;
-                }
-            }
-            catch {
-                MessageBox.Show(Messages.IsNotConnected);
-            }
+            //try {
+            //    if (await _neuroPlayService.IsConnectedAsync()) {
+            //        var formExperiment = Program.ServiceProvider.GetRequiredService<FiguresExperiment>();
+            //        formExperiment.Settings = setting;
+            //        formExperiment.Show();
+            //    }
+            //    else {
+            //        MessageBox.Show(Messages.IsNotConnected);
+            //        return;
+            //    }
+            //}
+            //catch {
+            //    MessageBox.Show(Messages.IsNotConnected);
+            //}
         }
 
         private void nudTimeOrCountIteration_ValueChanged(object sender, EventArgs e) {

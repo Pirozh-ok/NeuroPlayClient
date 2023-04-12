@@ -27,7 +27,7 @@ namespace NeuroPlayClient {
                     services.AddTransient<INeuroPlayService, NeuroPlayService>();
                     services.AddTransient<AuthForm>();
                     services.AddTransient<MainForm>();
-                    services.AddTransient<Experiment1Form>();
+                    services.AddTransient<FiguresExperiment>();
                 });
         }
     }

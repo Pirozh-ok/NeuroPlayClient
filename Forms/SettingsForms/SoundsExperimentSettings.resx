@@ -117,22 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantReadSettings" xml:space="preserve">
-    <value>Не удалось получить настройки пользователя</value>
-  </data>
-  <data name="IncorrectUserId" xml:space="preserve">
-    <value>Значение идентификатора не может быть пустой строкой или состоять из пробелов</value>
-  </data>
-  <data name="IncorrectUserName" xml:space="preserve">
-    <value>Значение ФИО не может быть пустой строкой или состоять из пробелов</value>
-  </data>
-  <data name="IncorrectUserType" xml:space="preserve">
-    <value>Некорректное значение типа! Пожалуйста, выберите значение из выпадающего списка</value>
-  </data>
-  <data name="IsNotConnected" xml:space="preserve">
-    <value>Не удалось установить соединение к серверу NeuroPlay. Подключитесь к устройству и повторите попытку!</value>
-  </data>
-  <data name="userDataPath" xml:space="preserve">
-    <value>UserData.txt</value>
-  </data>
 </root>
