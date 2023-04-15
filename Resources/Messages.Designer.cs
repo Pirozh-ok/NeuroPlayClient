@@ -70,6 +70,24 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Эксперимент закончен. Желаете продолжить?.
+        /// </summary>
+        public static string FinishedExperiment {
+            get {
+                return ResourceManager.GetString("FinishedExperiment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ../../Images/green-circle.png.
+        /// </summary>
+        public static string GreenImagePath {
+            get {
+                return ResourceManager.GetString("GreenImagePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Значение идентификатора не может быть пустой строкой или состоять из пробелов.
         /// </summary>
         public static string IncorrectUserId {
@@ -106,11 +124,65 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Не удалось закрыть файл для записи логов.
+        /// </summary>
+        public static string LoggerCloseError {
+            get {
+                return ResourceManager.GetString("LoggerCloseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не удалось открыть файл для записи логов.
+        /// </summary>
+        public static string LoggerConnectError {
+            get {
+                return ResourceManager.GetString("LoggerConnectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ../../Images/red-circle.png.
+        /// </summary>
+        public static string RedImagePath {
+            get {
+                return ResourceManager.GetString("RedImagePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ПЗ.
+        /// </summary>
+        public static string ShowGreenImage {
+            get {
+                return ResourceManager.GetString("ShowGreenImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ПК.
+        /// </summary>
+        public static string ShowRedImage {
+            get {
+                return ResourceManager.GetString("ShowRedImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на UserData.txt.
         /// </summary>
         public static string userDataPath {
             get {
                 return ResourceManager.GetString("userDataPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на НП.
+        /// </summary>
+        public static string UserPressedButton {
+            get {
+                return ResourceManager.GetString("UserPressedButton", resourceCulture);
             }
         }
     }

@@ -120,6 +120,12 @@
   <data name="CantReadSettings" xml:space="preserve">
     <value>Не удалось получить настройки пользователя</value>
   </data>
+  <data name="FinishedExperiment" xml:space="preserve">
+    <value>Эксперимент закончен. Желаете продолжить?</value>
+  </data>
+  <data name="GreenImagePath" xml:space="preserve">
+    <value>../../Images/green-circle.png</value>
+  </data>
   <data name="IncorrectUserId" xml:space="preserve">
     <value>Значение идентификатора не может быть пустой строкой или состоять из пробелов</value>
   </data>
@@ -132,7 +138,25 @@
   <data name="IsNotConnected" xml:space="preserve">
     <value>Не удалось установить соединение к серверу NeuroPlay. Подключитесь к устройству и повторите попытку!</value>
   </data>
+  <data name="LoggerCloseError" xml:space="preserve">
+    <value>Не удалось закрыть файл для записи логов</value>
+  </data>
+  <data name="LoggerConnectError" xml:space="preserve">
+    <value>Не удалось открыть файл для записи логов</value>
+  </data>
+  <data name="RedImagePath" xml:space="preserve">
+    <value>../../Images/red-circle.png</value>
+  </data>
+  <data name="ShowGreenImage" xml:space="preserve">
+    <value>ПЗ</value>
+  </data>
+  <data name="ShowRedImage" xml:space="preserve">
+    <value>ПК</value>
+  </data>
   <data name="userDataPath" xml:space="preserve">
     <value>UserData.txt</value>
+  </data>
+  <data name="UserPressedButton" xml:space="preserve">
+    <value>НП</value>
   </data>
 </root>

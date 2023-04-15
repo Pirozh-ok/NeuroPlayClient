@@ -1,5 +1,6 @@
 ﻿using NeuroPlayClient.Models;
 using NeuroPlayClient.Services;
+using NeuroPlayClient.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -7,12 +8,16 @@ using System.Windows.Forms;
 namespace NeuroPlayClient.Forms {
     public partial class FiguresExperimentSettings : Form {
         private readonly INeuroPlayService _neuroPlayService;
+        private readonly IFileSystemService _fileSystemService;
         private const double _discretization = 0.5;
         private Random _rnd = new Random(DateTime.Now.Millisecond);
+        public UserSettings UserData { get; set; };
 
-        public FiguresExperimentSettings(INeuroPlayService neuroPlayService) {
+
+        public FiguresExperimentSettings(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService) {
             InitializeComponent();
             _neuroPlayService = neuroPlayService;
+            _fileSystemService = fileSystemService;
         }
 
         private void btnStart_Click(object sender, System.EventArgs e) {
@@ -32,7 +37,8 @@ namespace NeuroPlayClient.Forms {
                 }) ;
             }
 
-
+            var experimentForm = new FiguresExperiment(_neuroPlayService, _fileSystemService, parametersExperiment);
+            experimentForm.Show();
         }
 
         private List<double> GetListPossibleValues(double value) {

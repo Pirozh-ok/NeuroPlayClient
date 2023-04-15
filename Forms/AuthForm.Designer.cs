@@ -134,7 +134,7 @@
             "Продвинутый"});
             this.cbUserType.Location = new System.Drawing.Point(245, 220);
             this.cbUserType.Name = "cbUserType";
-            this.cbUserType.Size = new System.Drawing.Size(219, 33);
+            this.cbUserType.Size = new System.Drawing.Size(259, 33);
             this.cbUserType.TabIndex = 14;
             this.cbUserType.Text = "Начальный";
             // 
@@ -173,14 +173,15 @@
             "Род существительного"});
             this.cbCase.Location = new System.Drawing.Point(245, 278);
             this.cbCase.Name = "cbCase";
-            this.cbCase.Size = new System.Drawing.Size(219, 33);
+            this.cbCase.Size = new System.Drawing.Size(259, 33);
             this.cbCase.TabIndex = 18;
+            this.cbCase.Text = "Геометрическая фигура";
             // 
             // AuthForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(511, 450);
+            this.ClientSize = new System.Drawing.Size(534, 450);
             this.Controls.Add(this.cbCase);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.chbRememberMe);

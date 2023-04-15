@@ -6,5 +6,8 @@ namespace NeuroPlayClient.Services.Interfaces {
         Task<ServiceResult> ReadUserSettingsFromFile();
         Task<ServiceResult> SaveUserSettingsToFile(UserSettings data);
         Task<ServiceResult> SaveUserExperimentToFile();
+        Task<ServiceResult> WriteLogAsync(string message);
+        ServiceResult OpenLoggerConnection();
+        ServiceResult CloseLoggerConnection();
     }
 }

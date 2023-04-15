@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeuroPlayClient.Forms;
 using NeuroPlayClient.Services;
+using NeuroPlayClient.Services.Implementations;
+using NeuroPlayClient.Services.Interfaces;
 
 namespace NeuroPlayClient {
     public static class Program {
@@ -25,9 +27,10 @@ namespace NeuroPlayClient {
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) => {
                     services.AddTransient<INeuroPlayService, NeuroPlayService>();
+                    services.AddTransient<IFileSystemService, FileSystemService>();
                     services.AddTransient<AuthForm>();
                     services.AddTransient<MainForm>();
-                    services.AddTransient<FiguresExperiment>();
+                    services.AddSingleton<FiguresExperiment>();
                 });
         }
     }

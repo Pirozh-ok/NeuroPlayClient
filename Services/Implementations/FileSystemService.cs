@@ -9,6 +9,28 @@ using System.Threading.Tasks;
 
 namespace NeuroPlayClient.Services.Implementations {
     public class FileSystemService : IFileSystemService {
+        private StreamWriter _logger;
+
+        public ServiceResult CloseLoggerConnection() {
+            try {
+                _logger.Close();
+                return new ServiceResult(true);
+            }
+            catch {
+                return new ServiceResult(false, new List<string>() { Messages.LoggerConnectError });
+            }
+        } 
+
+        public ServiceResult OpenLoggerConnection() {
+            try {
+                _logger = new StreamWriter("../../logs.txt", false);
+                return new ServiceResult(true);
+            }
+            catch {
+                return new ServiceResult(false, new List<string>() { Messages.LoggerCloseError });
+            }
+        }
+
         public async Task<ServiceResult> ReadUserSettingsFromFile() {
             try {
                 using (var sr = new StreamReader(Messages.userDataPath)) {
@@ -18,11 +40,11 @@ namespace NeuroPlayClient.Services.Implementations {
                 }
             }
             catch (Exception ex){
-                return new ServiceResult(false, new List<string> { ex.Message });
+                return new ServiceResult(false, new List<string>() { ex.Message });
             }
         }
 
-        public Task<ServiceResult> SaveUserExperimentToFile() {
+        public async Task<ServiceResult> SaveUserExperimentToFile() {
             throw new System.NotImplementedException();
         }
 
@@ -40,6 +62,16 @@ namespace NeuroPlayClient.Services.Implementations {
                 return new ServiceResult(false, new List<string>() { ex.Message });
             }
 
+        }
+
+        public async Task<ServiceResult> WriteLogAsync(string message) {
+            try {
+                await _logger.WriteAsync(message);
+                return new ServiceResult(true);
+            }
+            catch {
+                return new ServiceResult(false);
+            }
         }
     }
 }

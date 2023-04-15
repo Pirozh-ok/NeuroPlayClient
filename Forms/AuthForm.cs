@@ -7,15 +7,18 @@ using System.IO;
 using NeuroPlayClient.Forms;
 using NeuroPlayClient.Services;
 using System.Threading.Tasks;
+using NeuroPlayClient.Services.Interfaces;
 
 namespace NeuroPlayClient {
     public partial class AuthForm : Form {
         private Form _casesForm;
         private readonly INeuroPlayService _neuroPlayService;
+        private readonly IFileSystemService _fileSystemService;
 
-        public AuthForm(INeuroPlayService neuroPlayService) {
+        public AuthForm(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService) {
             InitializeComponent();
             _neuroPlayService = neuroPlayService;
+            _fileSystemService = fileSystemService;
             cbCase.DropDownStyle = ComboBoxStyle.DropDownList;
             cbUserType.DropDownStyle = ComboBoxStyle.DropDownList;
             ReadUserData();
@@ -46,8 +49,9 @@ namespace NeuroPlayClient {
                             break;
                         }
                     default: {
-                            _casesForm = new FiguresExperimentSettings(_neuroPlayService);
+                            _casesForm = new FiguresExperimentSettings(_neuroPlayService, _fileSystemService);
                             _casesForm.Show();
+                            ((FiguresExperimentSettings)_casesForm).UserData = userData;
                             break;
                         }
                 }
@@ -80,28 +84,25 @@ namespace NeuroPlayClient {
             }
         }
 
-        private void ReadUserData() {
-            try {
-                using (var sr = new StreamReader(Messages.userDataPath)) {
-                    var json = sr.ReadToEnd();
-                    var user = JsonConvert.DeserializeObject<UserSettings>(json);
-                    tbUserId.Text = (int.Parse(user.ExperimentId) + 1).ToString();
-                    tbUserName.Text = user.Name;
-                    cbUserType.Text = user.UserType.ToString();
-                    cbCase.Text = user.Case.ToString();
-                    numAge.Value = user.Age;
-                    chbRememberMe.Checked = user.RememberMe;
-                }
+        private async void ReadUserData() {
+            var result = await _fileSystemService.ReadUserSettingsFromFile();
+            if(result.Success) {
+                var user = ((ServiceResult<UserSettings>)result).Data;
+                tbUserId.Text = (int.Parse(user.ExperimentId) + 1).ToString();
+                tbUserName.Text = user.Name;
+                cbUserType.Text = user.UserType.ToString();
+                cbCase.Text = user.Case.ToString();
+                numAge.Value = user.Age;
+                chbRememberMe.Checked = user.RememberMe;
             }
-            catch (Exception) {
+            else {
                 MessageBox.Show(Messages.CantReadSettings);
                 tbUserId.Text = "0";
                 tbUserName.Text = string.Empty;
                 cbUserType.Text = UserType.Elementary.ToString();
                 cbCase.Text = Cases.Figurs.ToString();
                 numAge.Value = numAge.Minimum;
-                chbRememberMe.Checked = true;
-            }
+            }                       
         }
 
         private async Task<bool> NeuroPlayIsConected() {

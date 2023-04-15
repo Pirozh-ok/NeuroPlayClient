@@ -199,6 +199,12 @@
     <Compile Include="Forms\ExperimentForms\FiguresExperiment.Designer.cs">
       <DependentUpon>FiguresExperiment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SettingsForms\BaseExperimentSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsForms\BaseExperimentSettingsForm.Designer.cs">
+      <DependentUpon>BaseExperimentSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SettingsForms\CalculationExperimentSettingscs.cs">
       <SubType>Form</SubType>
     </Compile>
