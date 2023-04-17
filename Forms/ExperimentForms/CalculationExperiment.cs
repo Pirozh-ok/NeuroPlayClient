@@ -1,23 +1,22 @@
 ﻿using NeuroPlayClient.Models;
-using NeuroPlayClient.Resources;
-using NeuroPlayClient.Services;
 using NeuroPlayClient.Services.Interfaces;
+using NeuroPlayClient.Services;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using NeuroPlayClient.Resources;
+using System.Threading.Tasks;
 
-namespace NeuroPlayClient.Forms {
-    public partial class FiguresExperiment : Form {
+namespace NeuroPlayClient.Forms.ExperimentForms {
+    public partial class CalculationExperiment : Form {
         private readonly INeuroPlayService _neuroPlayService;
         private readonly IFileSystemService _fileSystemService;
-        private readonly List<SettingFigures> _settings;
+        private readonly List<SettingsCalculation> _settings;
         private TimesMarker[] _markers;
         private int _currentImage = 0;
         private DateTime _startTime;
 
-        public FiguresExperiment(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, List<SettingFigures> settings) {
+        public CalculationExperiment(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, List<SettingsCalculation> settings) {
             InitializeComponent();
             _neuroPlayService = neuroPlayService;
             _fileSystemService = fileSystemService;
@@ -38,10 +37,10 @@ namespace NeuroPlayClient.Forms {
             await _neuroPlayService.StartRecordAsync();
 
             for (int i = 0; i < _settings.Count; i++) {
-                pbImage.Image = _settings[i].IsGreenImage ? Image.FromFile(Messages.GreenImagePath) : Image.FromFile(Messages.RedImagePath);
+                lblCalculationTask.Text = $"{_settings[i].CalculationTask} = ?";
                 _markers[i].TimeShowImages = DateTime.Now;
                 await Task.Delay((int)(_settings[i].DurationShow * 1000));
-                pbImage.Image = null;
+                lblCalculationTask.Text = string.Empty;
                 await Task.Delay((int)(_settings[i].DurationPause * 1000));
                 _currentImage++;
             }
@@ -52,17 +51,13 @@ namespace NeuroPlayClient.Forms {
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
 
-            if(dialogResult == DialogResult.Yes) {
+            if (dialogResult == DialogResult.Yes) {
                 await StartExperiment();
                 return;
             }
             else {
                 Close();
             }
-        }
-
-        private async void Experiment1Form_Load(object sender, EventArgs e) {
-            await StartExperiment();
         }
 
         private async Task AddMarkers() {
@@ -72,9 +67,9 @@ namespace NeuroPlayClient.Forms {
                 if (_markers[i].TimeShowImages != default) {
                     string timeShowInMs = Math.Round((_markers[i].TimeShowImages - _startTime).TotalMilliseconds).ToString();
                     // Show green circle - ПЗ, Show red circle - ПК
-                    string text = _settings[i].IsGreenImage ? Messages.ShowGreenImage : Messages.ShowRedImage;
+                    string text = $"{Messages.ShowMarkers}:{_settings[i].CalculationTask}";
                     var result = await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
-                    await _fileSystemService.WriteLogAsync($"position - {timeShowInMs}; text - {text}; result - {result}");
+                    await _fileSystemService.WriteLogAsync($"position - {timeShowInMs}; text - {text}; result - {result}\n");
 
                     if (_markers[i].TimePressKey != null) {
                         string timePressKeyInMs = Math.Round(((DateTime)_markers[i].TimePressKey - _startTime).TotalMilliseconds).ToString();
@@ -88,10 +83,14 @@ namespace NeuroPlayClient.Forms {
             _fileSystemService.CloseLoggerConnection();
         }
 
-        private void Experiment1Form_KeyDown(object sender, KeyEventArgs e) {
+        private void CalculationExperiment_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Space) {
                 _markers[_currentImage].TimePressKey = DateTime.Now;
             }
+        }
+
+        private async void CalculationExperiment_Load(object sender, EventArgs e) {
+            await StartExperiment();
         }
     }
 }

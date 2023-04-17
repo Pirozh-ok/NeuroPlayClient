@@ -193,6 +193,12 @@
     <Compile Include="Forms\AuthForm.Designer.cs">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ExperimentForms\CalculationExperiment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExperimentForms\CalculationExperiment.Designer.cs">
+      <DependentUpon>CalculationExperiment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ExperimentForms\FiguresExperiment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,6 +241,7 @@
     <Compile Include="Models\JsonResponseModels\StopRecordResponse.cs" />
     <Compile Include="Models\ServiceResult.cs" />
     <Compile Include="Models\SettingFigures.cs" />
+    <Compile Include="Models\SettingsCalculation.cs" />
     <Compile Include="Models\TimesMarker.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserSettings.cs" />
@@ -259,11 +266,17 @@
     <EmbeddedResource Include="Forms\AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExperimentForms\CalculationExperiment.resx">
+      <DependentUpon>CalculationExperiment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ExperimentForms\FiguresExperiment.resx">
       <DependentUpon>FiguresExperiment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsForms\CalculationExperimentSettingscs.resx">
+      <DependentUpon>CalculationExperimentSettingscs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsForms\FiguresExperimentSettings.resx">
       <DependentUpon>FiguresExperimentSettings.cs</DependentUpon>

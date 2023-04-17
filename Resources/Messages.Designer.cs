@@ -79,6 +79,15 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Эксперимент окончен.
+        /// </summary>
+        public static string FinishedExperimentTitle {
+            get {
+                return ResourceManager.GetString("FinishedExperimentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ../../Images/green-circle.png.
         /// </summary>
         public static string GreenImagePath {
@@ -156,6 +165,15 @@ namespace NeuroPlayClient.Resources {
         public static string ShowGreenImage {
             get {
                 return ResourceManager.GetString("ShowGreenImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на СС.
+        /// </summary>
+        public static string ShowMarkers {
+            get {
+                return ResourceManager.GetString("ShowMarkers", resourceCulture);
             }
         }
         

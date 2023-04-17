@@ -8,6 +8,7 @@ using NeuroPlayClient.Forms;
 using NeuroPlayClient.Services;
 using System.Threading.Tasks;
 using NeuroPlayClient.Services.Interfaces;
+using NeuroPlayClient.Forms.Settings;
 
 namespace NeuroPlayClient {
     public partial class AuthForm : Form {
@@ -43,15 +44,16 @@ namespace NeuroPlayClient {
                 Enum.TryParse(cbCase.Text, out Cases choisedCase);
                 switch (choisedCase) {
                     case Cases.Calculation: {
+                            _casesForm = new CalculationExperimentSettings(_neuroPlayService, _fileSystemService, userData);
+                            _casesForm.Show();
                             break;
                         }
                     case Cases.Sounds: {
                             break;
                         }
                     default: {
-                            _casesForm = new FiguresExperimentSettings(_neuroPlayService, _fileSystemService);
+                            _casesForm = new CalculationExperimentSettings(_neuroPlayService, _fileSystemService, userData);
                             _casesForm.Show();
-                            ((FiguresExperimentSettings)_casesForm).UserData = userData;
                             break;
                         }
                 }
