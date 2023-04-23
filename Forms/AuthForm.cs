@@ -9,17 +9,24 @@ using NeuroPlayClient.Services;
 using System.Threading.Tasks;
 using NeuroPlayClient.Services.Interfaces;
 using NeuroPlayClient.Forms.Settings;
+using System.Configuration;
 
 namespace NeuroPlayClient {
     public partial class AuthForm : Form {
         private Form _casesForm;
         private readonly INeuroPlayService _neuroPlayService;
         private readonly IFileSystemService _fileSystemService;
+        private readonly ISettingsService _settingsService;
 
-        public AuthForm(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService) {
+        private const string FiguresExperiment = "Геометрическая фигура";
+        private const string CalculationExperiment = "Арифметические вычисления";
+        private const string SoundExperiment = "Род существительного";
+
+        public AuthForm(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, ISettingsService settingsService) {
             InitializeComponent();
             _neuroPlayService = neuroPlayService;
             _fileSystemService = fileSystemService;
+            _settingsService = settingsService;
             cbCase.DropDownStyle = ComboBoxStyle.DropDownList;
             cbUserType.DropDownStyle = ComboBoxStyle.DropDownList;
             ReadUserData();
@@ -30,29 +37,35 @@ namespace NeuroPlayClient {
                 Enum.TryParse(cbUserType.Text, out UserType userType);
                 var userData = new User(tbUserId.Text, tbUserName.Text, (uint)numAge.Value, userType);
 
+                var userSettings = new UserSettings() {
+                    ExperimentId = userData.ExperimentId,
+                    Name = userData.Name,
+                    Age = userData.Age,
+                    UserType = cbUserType.Text,
+                    Case = cbCase.Text
+                };
+
+                _settingsService.SetUserSettings(userSettings);
+
                 if (chbRememberMe.Checked) {
-                    SaveUserData(new UserSettings() {
-                        ExperimentId = userData.ExperimentId,
-                        Name = userData.Name,
-                        Age = userData.Age,
-                        UserType = userData.UserType,
-                        RememberMe = chbRememberMe.Checked,
-                    });
+                    userSettings.RememberMe = true;
+                    SaveUserData(userSettings);
                 }
 
                 this.Hide();
-                Enum.TryParse(cbCase.Text, out Cases choisedCase);
-                switch (choisedCase) {
-                    case Cases.Calculation: {
-                            _casesForm = new CalculationExperimentSettings(_neuroPlayService, _fileSystemService, userData);
+                switch (cbCase.Text) {
+                    case CalculationExperiment: {
+                            _casesForm = new CalculationExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService);
                             _casesForm.Show();
                             break;
                         }
-                    case Cases.Sounds: {
+                    case SoundExperiment: {
+                            _casesForm = new SoundsExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService);
+                            _casesForm.Show();
                             break;
                         }
                     default: {
-                            _casesForm = new CalculationExperimentSettings(_neuroPlayService, _fileSystemService, userData);
+                            _casesForm = new FiguresExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService);
                             _casesForm.Show();
                             break;
                         }
@@ -90,7 +103,7 @@ namespace NeuroPlayClient {
             var result = await _fileSystemService.ReadUserSettingsFromFile();
             if(result.Success) {
                 var user = ((ServiceResult<UserSettings>)result).Data;
-                tbUserId.Text = (int.Parse(user.ExperimentId) + 1).ToString();
+                tbUserId.Text = (int.Parse(user.ExperimentId)+1).ToString();
                 tbUserName.Text = user.Name;
                 cbUserType.Text = user.UserType.ToString();
                 cbCase.Text = user.Case.ToString();
@@ -99,10 +112,10 @@ namespace NeuroPlayClient {
             }
             else {
                 MessageBox.Show(Messages.CantReadSettings);
-                tbUserId.Text = "0";
+                tbUserId.Text = "1";
                 tbUserName.Text = string.Empty;
                 cbUserType.Text = UserType.Elementary.ToString();
-                cbCase.Text = Cases.Figurs.ToString();
+                cbCase.Text = FiguresExperiment;
                 numAge.Value = numAge.Minimum;
             }                       
         }

@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalculationExperiment" xml:space="preserve">
+    <value>Арифметические вычисления</value>
+  </data>
   <data name="CantReadSettings" xml:space="preserve">
     <value>Не удалось получить настройки пользователя</value>
+  </data>
+  <data name="ExperimentsDataPath" xml:space="preserve">
+    <value>experiments_data.txt</value>
+  </data>
+  <data name="FiguresExperiment" xml:space="preserve">
+    <value>Геометрическая фигура</value>
   </data>
   <data name="FinishedExperiment" xml:space="preserve">
     <value>Эксперимент закончен. Желаете продолжить?</value>
@@ -151,13 +160,16 @@
     <value>../../Images/red-circle.png</value>
   </data>
   <data name="ShowGreenImage" xml:space="preserve">
-    <value>ПЗ</value>
+    <value>СС: ЗК</value>
   </data>
   <data name="ShowMarkers" xml:space="preserve">
     <value>СС</value>
   </data>
   <data name="ShowRedImage" xml:space="preserve">
-    <value>ПК</value>
+    <value>СС: КК</value>
+  </data>
+  <data name="SoundExperiment" xml:space="preserve">
+    <value>Род существительного</value>
   </data>
   <data name="userDataPath" xml:space="preserve">
     <value>UserData.txt</value>

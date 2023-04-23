@@ -1,6 +1,7 @@
 ﻿using NeuroPlayClient.Models;
 using NeuroPlayClient.Resources;
 using NeuroPlayClient.Services;
+using NeuroPlayClient.Services.Implementations;
 using NeuroPlayClient.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,18 @@ namespace NeuroPlayClient.Forms {
     public partial class FiguresExperiment : Form {
         private readonly INeuroPlayService _neuroPlayService;
         private readonly IFileSystemService _fileSystemService;
+        private readonly ISettingsService _settingsService;
         private readonly List<SettingFigures> _settings;
         private TimesMarker[] _markers;
         private int _currentImage = 0;
         private DateTime _startTime;
 
-        public FiguresExperiment(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, List<SettingFigures> settings) {
+        public FiguresExperiment(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, 
+            List<SettingFigures> settings, ISettingsService settingsService) {
             InitializeComponent();
             _neuroPlayService = neuroPlayService;
             _fileSystemService = fileSystemService;
+            _settingsService = settingsService;
             _settings = settings;
             _markers = new TimesMarker[settings.Count];
         }
@@ -46,13 +50,15 @@ namespace NeuroPlayClient.Forms {
                 _currentImage++;
             }
 
-            var dialogResult = MessageBox.Show(Messages.FinishedExperiment, Messages.FinishedExperimentTitle, MessageBoxButtons.YesNo);
-
             await AddMarkers();
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
+                await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
+            _settingsService.IncrementIdExperiment();
 
-            if(dialogResult == DialogResult.Yes) {
+            var dialogResult = MessageBox.Show(Messages.FinishedExperiment, Messages.FinishedExperimentTitle, MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes) {
                 await StartExperiment();
                 return;
             }

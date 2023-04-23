@@ -9,14 +9,10 @@ using NeuroPlayClient.Forms.ExperimentForms;
 
 namespace NeuroPlayClient.Forms.Settings {
     public partial class CalculationExperimentSettings : BaseExperimentSettingsForm {
-        public CalculationExperimentSettings(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, User userData)
-            : base(neuroPlayService, fileSystemService, userData) {
+        public CalculationExperimentSettings(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, ISettingsService settingsService)
+            : base(neuroPlayService, fileSystemService, settingsService) {
             InitializeComponent();
         }
-
-        //public CalculationExperimentSettings(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, User userData) {
-        //    InitializeComponent();
-        //}
 
         private void btnStart_Click(object sender, System.EventArgs e) {
             int countIteration = (int)nudCoundIteration.Value;
@@ -35,7 +31,7 @@ namespace NeuroPlayClient.Forms.Settings {
                 });
             }
 
-            var experimentForm = new CalculationExperiment(_neuroPlayService, _fileSystemService, parametersExperiment);
+            var experimentForm = new CalculationExperiment(_neuroPlayService, _fileSystemService, parametersExperiment, _settingsService);
             experimentForm.Show();
         }
 
@@ -58,9 +54,13 @@ namespace NeuroPlayClient.Forms.Settings {
                     break;
             }
 
-            return symbol== "-" ? $"{_rnd.Next(1, maxValue)} {symbol} {_rnd.Next(1, maxValue/2)}" :
-                $"{_rnd.Next(1, maxValue)} {symbol} {_rnd.Next(0, maxValue)}";
+            return symbol == "-" ? $"{_rnd.Next(1, maxValue)} {symbol} {_rnd.Next(1, maxValue / 2)}" :
+                $"{_rnd.Next(1, maxValue)} {symbol} {_rnd.Next(1, maxValue)}";
         }
 
+        private void CalculationExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
+            _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
+            Application.Exit();
+        }
     }
 }

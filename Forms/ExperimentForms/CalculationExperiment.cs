@@ -6,22 +6,26 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using NeuroPlayClient.Resources;
 using System.Threading.Tasks;
+using NeuroPlayClient.Services.Implementations;
 
 namespace NeuroPlayClient.Forms.ExperimentForms {
     public partial class CalculationExperiment : Form {
         private readonly INeuroPlayService _neuroPlayService;
         private readonly IFileSystemService _fileSystemService;
         private readonly List<SettingsCalculation> _settings;
+        private readonly ISettingsService _settingsService;
         private TimesMarker[] _markers;
         private int _currentImage = 0;
         private DateTime _startTime;
 
-        public CalculationExperiment(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, List<SettingsCalculation> settings) {
+        public CalculationExperiment(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, 
+            List<SettingsCalculation> settings, ISettingsService settingsService) {
             InitializeComponent();
             _neuroPlayService = neuroPlayService;
             _fileSystemService = fileSystemService;
             _settings = settings;
             _markers = new TimesMarker[settings.Count];
+            _settingsService = settingsService;
         }
 
         private async Task StartExperiment() {
@@ -45,12 +49,13 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
                 _currentImage++;
             }
 
-            var dialogResult = MessageBox.Show(Messages.FinishedExperiment, Messages.FinishedExperimentTitle, MessageBoxButtons.YesNo);
-
             await AddMarkers();
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
+            await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
+            _settingsService.IncrementIdExperiment();
 
+            var dialogResult = MessageBox.Show(Messages.FinishedExperiment, Messages.FinishedExperimentTitle, MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes) {
                 await StartExperiment();
                 return;

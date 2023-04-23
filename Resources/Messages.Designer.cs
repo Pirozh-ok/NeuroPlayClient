@@ -61,11 +61,38 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Арифметические вычисления.
+        /// </summary>
+        public static string CalculationExperiment {
+            get {
+                return ResourceManager.GetString("CalculationExperiment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Не удалось получить настройки пользователя.
         /// </summary>
         public static string CantReadSettings {
             get {
                 return ResourceManager.GetString("CantReadSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ../../experiments_data.txt.
+        /// </summary>
+        public static string ExperimentsDataPath {
+            get {
+                return ResourceManager.GetString("ExperimentsDataPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Геометрическая фигура.
+        /// </summary>
+        public static string FiguresExperiment {
+            get {
+                return ResourceManager.GetString("FiguresExperiment", resourceCulture);
             }
         }
         
@@ -160,7 +187,7 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на ПЗ.
+        ///   Ищет локализованную строку, похожую на СС: ЗК.
         /// </summary>
         public static string ShowGreenImage {
             get {
@@ -178,11 +205,20 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на ПК.
+        ///   Ищет локализованную строку, похожую на СС: КК.
         /// </summary>
         public static string ShowRedImage {
             get {
                 return ResourceManager.GetString("ShowRedImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Род существительного.
+        /// </summary>
+        public static string SoundExperiment {
+            get {
+                return ResourceManager.GetString("SoundExperiment", resourceCulture);
             }
         }
         

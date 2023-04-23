@@ -44,8 +44,16 @@ namespace NeuroPlayClient.Services.Implementations {
             }
         }
 
-        public async Task<ServiceResult> SaveUserExperimentToFile() {
-            throw new System.NotImplementedException();
+        public async Task<ServiceResult> SaveUserExperimentToFile(string data) {
+            try {
+                using (var sw = new StreamWriter(Messages.ExperimentsDataPath, true)) {
+                    await sw.WriteLineAsync(data);
+                    return new ServiceResult<UserSettings>(true);
+                }
+            }
+            catch (Exception ex) {
+                return new ServiceResult(false, new List<string>() { ex.Message });
+            }
         }
 
         public async Task<ServiceResult> SaveUserSettingsToFile(UserSettings data) {

@@ -197,6 +197,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FiguresExperimentSettings";
             this.Text = "Настройка параметров для \"Геометрическая фигура\"";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FiguresExperimentSettings_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.nudCountIterations)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDurationShow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDurationPause)).EndInit();

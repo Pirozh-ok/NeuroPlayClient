@@ -3,11 +3,12 @@ using NeuroPlayClient.Models;
 using NeuroPlayClient.Services;
 using NeuroPlayClient.Services.Interfaces;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace NeuroPlayClient.Forms {
     public partial class FiguresExperimentSettings : BaseExperimentSettingsForm {
-        public FiguresExperimentSettings(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, User userData)
-            : base(neuroPlayService, fileSystemService, userData) {
+        public FiguresExperimentSettings(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, ISettingsService settingsService)
+            : base(neuroPlayService, fileSystemService, settingsService) {
             InitializeComponent();
         }
 
@@ -25,11 +26,16 @@ namespace NeuroPlayClient.Forms {
                     DurationShow = listShowValues[_rnd.Next(0, listShowValues.Count)],
                     DurationPause = listPauseValues[_rnd.Next(0, listPauseValues.Count)],
                     IsGreenImage = _rnd.Next() % 2 == 0
-                }) ;
+                });
             }
 
-            var experimentForm = new FiguresExperiment(_neuroPlayService, _fileSystemService, parametersExperiment);
+            var experimentForm = new FiguresExperiment(_neuroPlayService, _fileSystemService, parametersExperiment, _settingsService);
             experimentForm.Show();
+        }
+
+        private void FiguresExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
+            _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
+            Application.Exit();
         }
     }
 }

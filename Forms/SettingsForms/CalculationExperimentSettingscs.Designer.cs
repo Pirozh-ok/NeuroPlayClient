@@ -174,6 +174,7 @@
             this.Controls.Add(this.label1);
             this.Name = "CalculationExperimentSettings";
             this.Text = "Арифметические вычисления";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CalculationExperimentSettings_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.nudCoundIteration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDurationShow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDurationPause)).EndInit();

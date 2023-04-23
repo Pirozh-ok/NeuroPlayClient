@@ -28,8 +28,8 @@ namespace NeuroPlayClient {
                 .ConfigureServices((context, services) => {
                     services.AddTransient<INeuroPlayService, NeuroPlayService>();
                     services.AddTransient<IFileSystemService, FileSystemService>();
+                    services.AddSingleton<ISettingsService, SettingService>();
                     services.AddTransient<AuthForm>();
-                    services.AddTransient<MainForm>();
                     services.AddSingleton<FiguresExperiment>();
                 });
         }
