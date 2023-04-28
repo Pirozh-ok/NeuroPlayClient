@@ -53,6 +53,8 @@ namespace NeuroPlayClient.Forms.Settings {
                 });
             }
 
+            parametersExperiment[countIteration - 1].DurationPause = 0;
+
             _currentImage = 0;
             if (_markers != null)
                 Array.Clear(_markers, 0, _markers.Length);

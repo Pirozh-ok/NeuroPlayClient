@@ -31,6 +31,8 @@ namespace NeuroPlayClient.Forms.Settings {
                 });
             }
 
+            parametersExperiment[countIteration - 1].DurationPause = 0;
+
             var experimentForm = new CalculationExperiment(_neuroPlayService, _fileSystemService, parametersExperiment, _settingsService);
             experimentForm.Show();
         }

@@ -28,7 +28,7 @@ namespace NeuroPlayClient.Forms {
                     IsGreenImage = _rnd.Next() % 2 == 0
                 });
             }
-
+            parametersExperiment[countIteration - 1].DurationPause = 0;
             var experimentForm = new FiguresExperiment(_neuroPlayService, _fileSystemService, parametersExperiment, _settingsService);
             experimentForm.Show();
         }

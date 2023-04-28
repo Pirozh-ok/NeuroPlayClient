@@ -50,6 +50,8 @@ namespace NeuroPlayClient.Forms {
                 _currentImage++;
             }
 
+            Hide();
+
             await AddMarkers();
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
@@ -59,6 +61,7 @@ namespace NeuroPlayClient.Forms {
             var dialogResult = MessageBox.Show(Messages.FinishedExperiment, Messages.FinishedExperimentTitle, MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.Yes) {
+                Show();
                 await StartExperiment();
                 return;
             }

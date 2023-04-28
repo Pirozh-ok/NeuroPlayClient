@@ -129,5 +129,13 @@ namespace NeuroPlayClient {
                 return false;
             }
         }
+
+        private void btnExit_Click(object sender, EventArgs e) {
+            Application.Exit();
+        }
+
+        private void label5_Click(object sender, EventArgs e) {
+            Application.Exit();
+        }
     }
 }
