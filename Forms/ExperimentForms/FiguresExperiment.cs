@@ -40,10 +40,15 @@ namespace NeuroPlayClient.Forms {
 
             _startTime = DateTime.Now;
             await _neuroPlayService.StartRecordAsync();
+            await _neuroPlayService.AddMarkerAsync("0", $"id:{_settingsService.GetExperimentId().Data}");
 
             for (int i = 0; i < _settings.Count; i++) {
                 pbImage.Image = _settings[i].IsGreenImage ? Image.FromFile(Messages.GreenImagePath) : Image.FromFile(Messages.RedImagePath);
-                _markers[i].TimeShowImages = DateTime.Now;
+                //_markers[i].TimeShowImages = DateTime.Now;
+
+                string text = _settings[i].IsGreenImage ? Messages.ShowGreenImage : Messages.ShowRedImage;
+                var result = await _neuroPlayService.AddMarkerAsync((_startTime - DateTime.Now).Milliseconds.ToString(), text);
+
                 await Task.Delay((int)(_settings[i].DurationShow * 1000));
                 pbImage.Image = null;
                 await Task.Delay((int)(_settings[i].DurationPause * 1000));
@@ -52,7 +57,7 @@ namespace NeuroPlayClient.Forms {
 
             Hide();
 
-            await AddMarkers();
+            //await AddMarkers();
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
                 await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
@@ -97,9 +102,10 @@ namespace NeuroPlayClient.Forms {
             _fileSystemService.CloseLoggerConnection();
         }
 
-        private void Experiment1Form_KeyDown(object sender, KeyEventArgs e) {
+        private async void Experiment1Form_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Space) {
-                _markers[_currentImage].TimePressKey = DateTime.Now;
+                //_markers[_currentImage].TimePressKey = DateTime.Now;
+                await _neuroPlayService.AddMarkerAsync((_startTime - DateTime.Now).Milliseconds.ToString(), Messages.UserPressedButton);
             }
         }
     }

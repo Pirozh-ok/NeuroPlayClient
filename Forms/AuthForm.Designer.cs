@@ -107,7 +107,7 @@
             this.numAge.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numAge.Location = new System.Drawing.Point(216, 125);
             this.numAge.Minimum = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -115,7 +115,7 @@
             this.numAge.Size = new System.Drawing.Size(78, 32);
             this.numAge.TabIndex = 10;
             this.numAge.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -245,6 +245,8 @@
             this.Name = "AuthForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Авторизация";
+            this.Load += new System.EventHandler(this.AuthForm_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AuthForm_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.numAge)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

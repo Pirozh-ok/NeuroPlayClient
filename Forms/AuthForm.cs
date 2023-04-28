@@ -137,5 +137,15 @@ namespace NeuroPlayClient {
         private void label5_Click(object sender, EventArgs e) {
             Application.Exit();
         }
+
+        private void AuthForm_MouseDown(object sender, MouseEventArgs e) {
+            base.Capture = false;
+            Message m = Message.Create(base.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
+            this.WndProc(ref m);
+        }
+
+        private void AuthForm_Load(object sender, EventArgs e) {
+            ActiveControl = null;
+        }
     }
 }

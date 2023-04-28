@@ -41,6 +41,8 @@ namespace NeuroPlayClient.Forms.Settings {
         }
 
         private async Task StartExperiment() {
+            ActiveControl = null;
+
             int countIteration = (int)nudCountIterations.Value;
             double durationPause = (double)nudPauseDuration.Value;
             var parametersExperiment = new List<SettingsSound>();
@@ -54,29 +56,25 @@ namespace NeuroPlayClient.Forms.Settings {
             }
 
             parametersExperiment[countIteration - 1].DurationPause = 0;
-
             _currentImage = 0;
-            if (_markers != null)
-                Array.Clear(_markers, 0, _markers.Length);
-            _markers = new TimesMarker[parametersExperiment.Count];
-
-            for (int i = 0; i < _markers.Length; i++) {
-                _markers[i] = new TimesMarker();
-            }
 
             await Task.Delay(1000);
             _startTime = DateTime.Now;
             await _neuroPlayService.StartRecordAsync();
+            await _neuroPlayService.AddMarkerAsync("0", $"id:{_settingsService.GetExperimentId().Data}");
 
             //play sounds
             for (int i = 0; i < parametersExperiment.Count; i++) {
-                _markers[i].TimeShowImages = DateTime.Now;
+                string timeShowInMs = Math.Round((DateTime.Now - _startTime).TotalMilliseconds).ToString();
+                // CC:"speaked word"
+                string text = $"{Messages.ShowMarkers}:{parametersExperiment[i].Word}";
+                await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
+
                 _speech.SpeakAsync(parametersExperiment[i].Word);
                 await Task.Delay((int)(parametersExperiment[i].DurationPause * 1000));
                 _currentImage++;
             }
 
-            await AddMarkers(parametersExperiment.Select(x => x.Word).ToList());
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
             await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
@@ -89,37 +87,40 @@ namespace NeuroPlayClient.Forms.Settings {
             }
         }
 
-        private async Task AddMarkers(List<string> words) {
-            _fileSystemService.OpenLoggerConnection();
+        //private async Task AddMarkers(List<string> words) {
+        //    _fileSystemService.OpenLoggerConnection();
 
-            for (int i = 0; i < _markers.Length; i++) {
-                if (_markers[i].TimeShowImages != default) {
-                    string timeShowInMs = Math.Round((_markers[i].TimeShowImages - _startTime).TotalMilliseconds).ToString();
-                    // CC:"speaked word"
-                    string text = $"{Messages.ShowMarkers}:{words[i]}";
-                    var result = await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
-                    await _fileSystemService.WriteLogAsync($"position - {timeShowInMs}; text - {text}; result - {result}\n");
+        //    for (int i = 0; i < _markers.Length; i++) {
+        //        if (_markers[i].TimeShowImages != default) {
+        //            string timeShowInMs = Math.Round((_markers[i].TimeShowImages - _startTime).TotalMilliseconds).ToString();
+        //            // CC:"speaked word"
+        //            string text = $"{Messages.ShowMarkers}:{words[i]}";
+        //            var result = await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
+        //            await _fileSystemService.WriteLogAsync($"position - {timeShowInMs}; text - {text}; result - {result}\n");
 
-                    if (_markers[i].TimePressKey != null) {
-                        string timePressKeyInMs = Math.Round(((DateTime)_markers[i].TimePressKey - _startTime).TotalMilliseconds).ToString();
-                        // User pressed space - НП
-                        var result1 = await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, Messages.UserPressedButton);
-                        await _fileSystemService.WriteLogAsync($"position - {timePressKeyInMs}; user pressed space; result - {result1}");
-                    }
-                }
-            }
+        //            if (_markers[i].TimePressKey != null) {
+        //                string timePressKeyInMs = Math.Round(((DateTime)_markers[i].TimePressKey - _startTime).TotalMilliseconds).ToString();
+        //                // User pressed space - НП
+        //                var result1 = await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, Messages.UserPressedButton);
+        //                await _fileSystemService.WriteLogAsync($"position - {timePressKeyInMs}; user pressed space; result - {result1}");
+        //            }
+        //        }
+        //    }
 
-            _fileSystemService.CloseLoggerConnection();
-        }
+        //    _fileSystemService.CloseLoggerConnection();
+        //}
 
         private void SoundsExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
             _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
             Application.Exit();
         }
 
-        private void SoundsExperimentSettings_KeyDown(object sender, KeyEventArgs e) {
+        private async void SoundsExperimentSettings_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Space) {
-                _markers[_currentImage].TimePressKey = DateTime.Now;
+                //_markers[_currentImage].TimePressKey = DateTime.Now;
+                string timePressKeyInMs = Math.Round((DateTime.Now - _startTime).TotalMilliseconds).ToString();
+                // User pressed space - НП
+                await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, Messages.UserPressedButton);
             }
         }
     }
