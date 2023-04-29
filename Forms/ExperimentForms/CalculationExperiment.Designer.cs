@@ -44,6 +44,7 @@
             this.Controls.Add(this.lblCalculationTask);
             this.Name = "CalculationExperiment";
             this.Text = "Эксперимент \"Арифметические вычисления\"";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CalculationExperiment_FormClosing);
             this.Load += new System.EventHandler(this.CalculationExperiment_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CalculationExperiment_KeyDown);
             this.ResumeLayout(false);

@@ -12,12 +12,18 @@ namespace NeuroPlayClient.Forms.SettingsForms {
         protected readonly IFileSystemService _fileSystemService;
         protected const double _discretization = 0.5;
         protected Random _rnd = new Random(DateTime.Now.Millisecond);
+        protected Form _authForm;
 
-        public BaseExperimentSettingsForm(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, ISettingsService settingsService) {
+        public BaseExperimentSettingsForm(
+            INeuroPlayService neuroPlayService, 
+            IFileSystemService fileSystemService, 
+            ISettingsService settingsService,
+            Form authForm) {
             InitializeComponent();
             _neuroPlayService = neuroPlayService;
             _fileSystemService = fileSystemService;
             _settingsService = settingsService;
+            _authForm = authForm;
         }
 
         protected List<double> GetListPossibleValues(double value) {

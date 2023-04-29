@@ -15,13 +15,14 @@ using System.Linq;
 namespace NeuroPlayClient.Forms.Settings {
     public partial class SoundsExperimentSettings : BaseExperimentSettingsForm {
         private SpeechSynthesizer _speech;
-        private TimesMarker[] _markers;
-        private int _currentImage = 0;
         private DateTime _startTime;
         private List<string> words = new List<string>();
 
-        public SoundsExperimentSettings(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, ISettingsService settingsService)
-            : base(neuroPlayService, fileSystemService, settingsService) {
+        public SoundsExperimentSettings(
+            INeuroPlayService neuroPlayService, 
+            IFileSystemService fileSystemService, 
+            ISettingsService settingsService
+            , Form authForm) : base(neuroPlayService, fileSystemService, settingsService, authForm) {
             InitializeComponent();
             _speech = new SpeechSynthesizer();
             _speech.Volume = 100;  // 0...100
@@ -56,23 +57,23 @@ namespace NeuroPlayClient.Forms.Settings {
             }
 
             parametersExperiment[countIteration - 1].DurationPause = 0;
-            _currentImage = 0;
 
             await Task.Delay(1000);
             _startTime = DateTime.Now;
             await _neuroPlayService.StartRecordAsync();
             await _neuroPlayService.AddMarkerAsync("0", $"id:{_settingsService.GetExperimentId().Data}");
+            await Task.Delay(1000);
 
             //play sounds
             for (int i = 0; i < parametersExperiment.Count; i++) {
+                _speech.SpeakAsync(parametersExperiment[i].Word);
+
                 string timeShowInMs = Math.Round((DateTime.Now - _startTime).TotalMilliseconds).ToString();
                 // CC:"speaked word"
                 string text = $"{Messages.ShowMarkers}:{parametersExperiment[i].Word}";
                 await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
 
-                _speech.SpeakAsync(parametersExperiment[i].Word);
                 await Task.Delay((int)(parametersExperiment[i].DurationPause * 1000));
-                _currentImage++;
             }
 
             await Task.Delay(2000);
@@ -87,32 +88,11 @@ namespace NeuroPlayClient.Forms.Settings {
             }
         }
 
-        //private async Task AddMarkers(List<string> words) {
-        //    _fileSystemService.OpenLoggerConnection();
-
-        //    for (int i = 0; i < _markers.Length; i++) {
-        //        if (_markers[i].TimeShowImages != default) {
-        //            string timeShowInMs = Math.Round((_markers[i].TimeShowImages - _startTime).TotalMilliseconds).ToString();
-        //            // CC:"speaked word"
-        //            string text = $"{Messages.ShowMarkers}:{words[i]}";
-        //            var result = await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
-        //            await _fileSystemService.WriteLogAsync($"position - {timeShowInMs}; text - {text}; result - {result}\n");
-
-        //            if (_markers[i].TimePressKey != null) {
-        //                string timePressKeyInMs = Math.Round(((DateTime)_markers[i].TimePressKey - _startTime).TotalMilliseconds).ToString();
-        //                // User pressed space - НП
-        //                var result1 = await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, Messages.UserPressedButton);
-        //                await _fileSystemService.WriteLogAsync($"position - {timePressKeyInMs}; user pressed space; result - {result1}");
-        //            }
-        //        }
-        //    }
-
-        //    _fileSystemService.CloseLoggerConnection();
-        //}
-
         private void SoundsExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
             _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
-            Application.Exit();
+
+            if (!_authForm.Visible)
+                Application.Exit();
         }
 
         private async void SoundsExperimentSettings_KeyDown(object sender, KeyEventArgs e) {

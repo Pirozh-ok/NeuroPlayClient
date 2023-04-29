@@ -246,6 +246,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Авторизация";
             this.Load += new System.EventHandler(this.AuthForm_Load);
+            this.VisibleChanged += new System.EventHandler(this.AuthForm_VisibleChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AuthForm_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.numAge)).EndInit();
             this.panel1.ResumeLayout(false);

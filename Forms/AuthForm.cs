@@ -9,7 +9,6 @@ using NeuroPlayClient.Services;
 using System.Threading.Tasks;
 using NeuroPlayClient.Services.Interfaces;
 using NeuroPlayClient.Forms.Settings;
-using System.Configuration;
 
 namespace NeuroPlayClient {
     public partial class AuthForm : Form {
@@ -52,20 +51,20 @@ namespace NeuroPlayClient {
                     SaveUserData(userSettings);
                 }
 
-                this.Hide();
+                Hide();
                 switch (cbCase.Text) {
                     case CalculationExperiment: {
-                            _casesForm = new CalculationExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService);
+                            _casesForm = new CalculationExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService, this);
                             _casesForm.Show();
                             break;
                         }
                     case SoundExperiment: {
-                            _casesForm = new SoundsExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService);
+                            _casesForm = new SoundsExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService, this);
                             _casesForm.Show();
                             break;
                         }
                     default: {
-                            _casesForm = new FiguresExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService);
+                            _casesForm = new FiguresExperimentSettings(_neuroPlayService, _fileSystemService, _settingsService, this);
                             _casesForm.Show();
                             break;
                         }
@@ -111,7 +110,6 @@ namespace NeuroPlayClient {
                 chbRememberMe.Checked = user.RememberMe;
             }
             else {
-                MessageBox.Show(Messages.CantReadSettings);
                 tbUserId.Text = "1";
                 tbUserName.Text = string.Empty;
                 cbUserType.Text = UserType.Elementary.ToString();
@@ -146,6 +144,10 @@ namespace NeuroPlayClient {
 
         private void AuthForm_Load(object sender, EventArgs e) {
             ActiveControl = null;
+        }
+
+        private void AuthForm_VisibleChanged(object sender, EventArgs e) {
+            ReadUserData();
         }
     }
 }

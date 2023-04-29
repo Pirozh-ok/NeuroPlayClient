@@ -14,8 +14,6 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
         private readonly IFileSystemService _fileSystemService;
         private readonly List<SettingsCalculation> _settings;
         private readonly ISettingsService _settingsService;
-        private TimesMarker[] _markers;
-        private int _currentImage = 0;
         private DateTime _startTime;
 
         public CalculationExperiment(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, 
@@ -24,26 +22,18 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
             _neuroPlayService = neuroPlayService;
             _fileSystemService = fileSystemService;
             _settings = settings;
-            _markers = new TimesMarker[settings.Count];
             _settingsService = settingsService;
         }
 
         private async Task StartExperiment() {
-            _currentImage = 0;
-            Array.Clear(_markers, 0, _markers.Length);
-            _markers = new TimesMarker[_settings.Count];
-
-            for (int i = 0; i < _markers.Length; i++) {
-                _markers[i] = new TimesMarker();
-            }
-
             _startTime = DateTime.Now;
             await _neuroPlayService.StartRecordAsync();
             await _neuroPlayService.AddMarkerAsync("0", $"id:{_settingsService.GetExperimentId().Data}");
+            await Task.Delay(1000);
 
             for (int i = 0; i < _settings.Count; i++) {
                 lblCalculationTask.Text = $"{_settings[i].CalculationTask} = ?";
-                //_markers[i].TimeShowImages = DateTime.Now;
+
                 string timeShowInMs = Math.Round((DateTime.Now - _startTime).TotalMilliseconds).ToString();
                 string text = $"{Messages.ShowMarkers}:{_settings[i].CalculationTask}";
                 await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
@@ -51,12 +41,10 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
                 await Task.Delay((int)(_settings[i].DurationShow * 1000));
                 lblCalculationTask.Text = string.Empty;
                 await Task.Delay((int)(_settings[i].DurationPause * 1000));
-                _currentImage++;
             }
 
             Hide();
 
-            //await AddMarkers();
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
             await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
@@ -73,31 +61,8 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
             }
         }
 
-        private async Task AddMarkers() {
-            _fileSystemService.OpenLoggerConnection();
-
-            for (int i = 0; i < _markers.Length; i++) {
-                if (_markers[i].TimeShowImages != default) {
-                    string timeShowInMs = Math.Round((_markers[i].TimeShowImages - _startTime).TotalMilliseconds).ToString();
-                    string text = $"{Messages.ShowMarkers}:{_settings[i].CalculationTask}";
-                    var result = await _neuroPlayService.AddMarkerAsync(timeShowInMs, text);
-                    await _fileSystemService.WriteLogAsync($"position - {timeShowInMs}; text - {text}; result - {result}\n");
-
-                    if (_markers[i].TimePressKey != null) {
-                        string timePressKeyInMs = Math.Round(((DateTime)_markers[i].TimePressKey - _startTime).TotalMilliseconds).ToString();
-                        // User pressed space - НП
-                        var result1 = await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, Messages.UserPressedButton);
-                        await _fileSystemService.WriteLogAsync($"position - {timePressKeyInMs}; user pressed space; result - {result1}");
-                    }
-                }
-            }
-
-            _fileSystemService.CloseLoggerConnection();
-        }
-
         private async void CalculationExperiment_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Space) {
-                //_markers[_currentImage].TimePressKey = DateTime.Now;
                 string timePressKeyInMs = Math.Round((DateTime.Now - _startTime).TotalMilliseconds).ToString();
                 // User pressed space - НП
                 await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, Messages.UserPressedButton);
@@ -106,6 +71,10 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
 
         private async void CalculationExperiment_Load(object sender, EventArgs e) {
             await StartExperiment();
+        }
+
+        private async void CalculationExperiment_FormClosing(object sender, FormClosingEventArgs e) {
+            await _neuroPlayService.StopRecordAsync();
         }
     }
 }

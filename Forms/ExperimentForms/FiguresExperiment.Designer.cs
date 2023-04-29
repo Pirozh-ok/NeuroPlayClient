@@ -45,6 +45,7 @@
             this.KeyPreview = true;
             this.Name = "FiguresExperiment";
             this.Text = "Геометрические фигуры";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FiguresExperiment_FormClosing);
             this.Load += new System.EventHandler(this.Experiment1Form_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Experiment1Form_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
