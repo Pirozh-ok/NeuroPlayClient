@@ -13,6 +13,7 @@ namespace NeuroPlayClient.Forms.SettingsForms {
         protected const double _discretization = 0.5;
         protected Random _rnd = new Random(DateTime.Now.Millisecond);
         protected Form _authForm;
+        protected bool isStarted = false;
 
         public BaseExperimentSettingsForm(
             INeuroPlayService neuroPlayService, 

@@ -29,6 +29,7 @@ namespace NeuroPlayClient {
             cbCase.DropDownStyle = ComboBoxStyle.DropDownList;
             cbUserType.DropDownStyle = ComboBoxStyle.DropDownList;
             ReadUserData();
+            ActiveControl = null;
         }
 
         private async void btnStart_Click(object sender, EventArgs e) {
@@ -102,7 +103,7 @@ namespace NeuroPlayClient {
             var result = await _fileSystemService.ReadUserSettingsFromFile();
             if(result.Success) {
                 var user = ((ServiceResult<UserSettings>)result).Data;
-                tbUserId.Text = (int.Parse(user.ExperimentId)+1).ToString();
+                tbUserId.Text = user.ExperimentId;
                 tbUserName.Text = user.Name;
                 cbUserType.Text = user.UserType.ToString();
                 cbCase.Text = user.Case.ToString();

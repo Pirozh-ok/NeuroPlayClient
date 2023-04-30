@@ -28,6 +28,9 @@ namespace NeuroPlayClient.Forms {
         }
 
         private async Task StartExperiment() {
+            await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
+            _settingsService.IncrementIdExperiment();
+            await _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
 
             _startTime = DateTime.Now;
             await _neuroPlayService.StartRecordAsync();
@@ -49,14 +52,12 @@ namespace NeuroPlayClient.Forms {
 
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
-                await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
-            _settingsService.IncrementIdExperiment();
 
             var dialogResult = MessageBox.Show(Messages.FinishedExperiment, Messages.FinishedExperimentTitle, MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.Yes) {
-                Close();
                 _authForm.Show();
+                Close();
                 return;
             }
             else {
@@ -76,6 +77,10 @@ namespace NeuroPlayClient.Forms {
 
         private async void FiguresExperiment_FormClosing(object sender, FormClosingEventArgs e) {
             await _neuroPlayService.StopRecordAsync();
+
+            if (!_authForm.Visible) {
+                Application.Exit();
+            }
         }
     }
 }

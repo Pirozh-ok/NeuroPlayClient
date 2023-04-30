@@ -1,5 +1,4 @@
 ﻿using NeuroPlayClient.Forms.SettingsForms;
-using NeuroPlayClient.Models;
 using NeuroPlayClient.Services.Interfaces;
 using NeuroPlayClient.Services;
 using System;
@@ -10,7 +9,6 @@ using System.IO;
 using System.Speech.Synthesis;
 using System.Threading.Tasks;
 using NeuroPlayClient.Resources;
-using System.Linq;
 
 namespace NeuroPlayClient.Forms.Settings {
     public partial class SoundsExperimentSettings : BaseExperimentSettingsForm {
@@ -21,8 +19,8 @@ namespace NeuroPlayClient.Forms.Settings {
         public SoundsExperimentSettings(
             INeuroPlayService neuroPlayService, 
             IFileSystemService fileSystemService, 
-            ISettingsService settingsService
-            , Form authForm) : base(neuroPlayService, fileSystemService, settingsService, authForm) {
+            ISettingsService settingsService,
+            Form authForm) : base(neuroPlayService, fileSystemService, settingsService, authForm) {
             InitializeComponent();
             _speech = new SpeechSynthesizer();
             _speech.Volume = 100;  // 0...100
@@ -31,7 +29,7 @@ namespace NeuroPlayClient.Forms.Settings {
 
         private async void btnStart_Click(object sender, EventArgs e) {
             btnStart.Enabled = false;
-            using (var sr = new StreamReader("../../words1.txt")) {
+            using (var sr = new StreamReader(Messages.WordForSoundsPath)) {
                 while (!sr.EndOfStream) {
                     words.Add(sr.ReadLine());
                 }
@@ -43,6 +41,10 @@ namespace NeuroPlayClient.Forms.Settings {
 
         private async Task StartExperiment() {
             ActiveControl = null;
+            isStarted = true;
+            await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
+            _settingsService.IncrementIdExperiment();
+            await _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
 
             int countIteration = (int)nudCountIterations.Value;
             double durationPause = (double)nudPauseDuration.Value;
@@ -78,26 +80,25 @@ namespace NeuroPlayClient.Forms.Settings {
 
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
-            await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
-            _settingsService.IncrementIdExperiment();
 
             var dialogResult = MessageBox.Show(Messages.FinishedExperiment, Messages.FinishedExperimentTitle, MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes) {
-                await StartExperiment();
-                return;
+                _authForm.Show();
             }
+            Close();
         }
 
-        private void SoundsExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
-            _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
+        private async void SoundsExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
+            await _neuroPlayService.StopRecordAsync();
+            await _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
 
-            if (!_authForm.Visible)
+            if (!_authForm.Visible) {
                 Application.Exit();
+            }
         }
 
         private async void SoundsExperimentSettings_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Space) {
-                //_markers[_currentImage].TimePressKey = DateTime.Now;
                 string timePressKeyInMs = Math.Round((DateTime.Now - _startTime).TotalMilliseconds).ToString();
                 // User pressed space - НП
                 await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, Messages.UserPressedButton);

@@ -177,4 +177,7 @@
   <data name="UserPressedButton" xml:space="preserve">
     <value>НП</value>
   </data>
+  <data name="WordForSoundsPath" xml:space="preserve">
+    <value>../../words.txt</value>
+  </data>
 </root>

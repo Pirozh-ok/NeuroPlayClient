@@ -2,7 +2,6 @@
 using NeuroPlayClient.Models;
 using NeuroPlayClient.Services.Interfaces;
 using NeuroPlayClient.Services;
-using System.ComponentModel;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using NeuroPlayClient.Forms.ExperimentForms;
@@ -36,38 +35,25 @@ namespace NeuroPlayClient.Forms.Settings {
 
             parametersExperiment[countIteration - 1].DurationPause = 0;
 
-            var experimentForm = new CalculationExperiment(_neuroPlayService, _fileSystemService, parametersExperiment, _settingsService);
+            var experimentForm = new CalculationExperiment(_neuroPlayService, _fileSystemService, parametersExperiment, _settingsService, _authForm);
             experimentForm.Show();
+            isStarted = true;
             Close();
         }
 
         private string GenerateCalculationTask() {
-            int maxValue;
-            string symbol;
-
             switch (_rnd.Next(0, 2)) {
                 case 0:
-                    maxValue = 10;
-                    symbol = "*";
-                    break;
+                    return $"{_rnd.Next(1, 10)} * {_rnd.Next(1, 10)}";
                 case 1:
-                    maxValue = 100;
-                    symbol = "-";
-                    break;
+                    return $"{_rnd.Next(50, 100)} - {_rnd.Next(1, 50)}";
                 default:
-                    maxValue = 50;
-                    symbol = "+";
-                    break;
+                   return $"{_rnd.Next(1, 50)} + {_rnd.Next(1, 50)}";
             }
-
-            return symbol == "-" ? $"{_rnd.Next(1, maxValue)} {symbol} {_rnd.Next(1, maxValue / 2)}" :
-                $"{_rnd.Next(1, maxValue)} {symbol} {_rnd.Next(1, maxValue)}";
         }
 
         private void CalculationExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
-            _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
-
-            if (!_authForm.Visible)
+           if (!isStarted)
                 Application.Exit();
         }
     }

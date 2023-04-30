@@ -15,17 +15,27 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
         private readonly List<SettingsCalculation> _settings;
         private readonly ISettingsService _settingsService;
         private DateTime _startTime;
+        private Form _authForm;
 
-        public CalculationExperiment(INeuroPlayService neuroPlayService, IFileSystemService fileSystemService, 
-            List<SettingsCalculation> settings, ISettingsService settingsService) {
+        public CalculationExperiment(
+            INeuroPlayService neuroPlayService, 
+            IFileSystemService fileSystemService, 
+            List<SettingsCalculation> settings, 
+            ISettingsService settingsService,
+            Form authForm) {
             InitializeComponent();
             _neuroPlayService = neuroPlayService;
             _fileSystemService = fileSystemService;
             _settings = settings;
             _settingsService = settingsService;
+            _authForm = authForm;
         }
 
         private async Task StartExperiment() {
+            await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
+            _settingsService.IncrementIdExperiment();
+            await _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
+
             _startTime = DateTime.Now;
             await _neuroPlayService.StartRecordAsync();
             await _neuroPlayService.AddMarkerAsync("0", $"id:{_settingsService.GetExperimentId().Data}");
@@ -47,13 +57,11 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
 
             await Task.Delay(2000);
             await _neuroPlayService.StopRecordAsync();
-            await _fileSystemService.SaveUserExperimentToFile(_settingsService.GetSettingsToString().Data);
-            _settingsService.IncrementIdExperiment();
 
             var dialogResult = MessageBox.Show(Messages.FinishedExperiment, Messages.FinishedExperimentTitle, MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes) {
-                Show();
-                await StartExperiment();
+                _authForm.Show();
+                Close();
                 return;
             }
             else {
@@ -75,6 +83,10 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
 
         private async void CalculationExperiment_FormClosing(object sender, FormClosingEventArgs e) {
             await _neuroPlayService.StopRecordAsync();
+
+            if (!_authForm.Visible) {
+                Application.Exit();
+            }
         }
     }
 }

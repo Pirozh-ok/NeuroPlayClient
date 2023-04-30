@@ -79,7 +79,7 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на ../../experiments_data.txt.
+        ///   Ищет локализованную строку, похожую на experiments_data.txt.
         /// </summary>
         public static string ExperimentsDataPath {
             get {
@@ -237,6 +237,15 @@ namespace NeuroPlayClient.Resources {
         public static string UserPressedButton {
             get {
                 return ResourceManager.GetString("UserPressedButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ../../words.txt.
+        /// </summary>
+        public static string WordForSoundsPath {
+            get {
+                return ResourceManager.GetString("WordForSoundsPath", resourceCulture);
             }
         }
     }

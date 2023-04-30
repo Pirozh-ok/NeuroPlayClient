@@ -12,8 +12,6 @@ namespace NeuroPlayClient.Forms {
             InitializeComponent();
         }
 
-        private bool isStarted = false;
-
         private void btnStart_Click(object sender, System.EventArgs e) {
             int countIteration = (int)nudCountIterations.Value;
             double durationShow = (double)nudDurationShow.Value;
