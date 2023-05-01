@@ -82,5 +82,9 @@ namespace NeuroPlayClient.Forms {
                 Application.Exit();
             }
         }
+
+        private void label6_Click(object sender, EventArgs e) {
+            Close();
+        }
     }
 }

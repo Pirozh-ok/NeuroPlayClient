@@ -9,8 +9,8 @@ using NeuroPlayClient.Forms.ExperimentForms;
 namespace NeuroPlayClient.Forms.Settings {
     public partial class CalculationExperimentSettings : BaseExperimentSettingsForm {
         public CalculationExperimentSettings(
-            INeuroPlayService neuroPlayService, 
-            IFileSystemService fileSystemService, 
+            INeuroPlayService neuroPlayService,
+            IFileSystemService fileSystemService,
             ISettingsService settingsService,
             Form authForm) : base(neuroPlayService, fileSystemService, settingsService, authForm) {
             InitializeComponent();
@@ -48,13 +48,17 @@ namespace NeuroPlayClient.Forms.Settings {
                 case 1:
                     return $"{_rnd.Next(50, 100)} - {_rnd.Next(1, 50)}";
                 default:
-                   return $"{_rnd.Next(1, 50)} + {_rnd.Next(1, 50)}";
+                    return $"{_rnd.Next(1, 50)} + {_rnd.Next(1, 50)}";
             }
         }
 
         private void CalculationExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
-           if (!isStarted)
+            if (!isStarted)
                 Application.Exit();
+        }
+
+        private void label6_Click(object sender, System.EventArgs e) {
+            Close();
         }
     }
 }

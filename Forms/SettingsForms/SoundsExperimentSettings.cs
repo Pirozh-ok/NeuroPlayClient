@@ -17,8 +17,8 @@ namespace NeuroPlayClient.Forms.Settings {
         private List<string> words = new List<string>();
 
         public SoundsExperimentSettings(
-            INeuroPlayService neuroPlayService, 
-            IFileSystemService fileSystemService, 
+            INeuroPlayService neuroPlayService,
+            IFileSystemService fileSystemService,
             ISettingsService settingsService,
             Form authForm) : base(neuroPlayService, fileSystemService, settingsService, authForm) {
             InitializeComponent();
@@ -103,6 +103,10 @@ namespace NeuroPlayClient.Forms.Settings {
                 // User pressed space - НП
                 await _neuroPlayService.AddMarkerAsync(timePressKeyInMs, Messages.UserPressedButton);
             }
+        }
+
+        private void label6_Click(object sender, EventArgs e) {
+            Close();
         }
     }
 }

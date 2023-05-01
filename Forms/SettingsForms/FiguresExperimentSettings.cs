@@ -38,8 +38,13 @@ namespace NeuroPlayClient.Forms {
         private void FiguresExperimentSettings_FormClosed(object sender, FormClosedEventArgs e) {
             _fileSystemService.SaveUserSettingsToFile(_settingsService.GetSettings().Data);
 
-            if(!isStarted)
+            if (!isStarted)
                 Application.Exit();
+        }
+
+        private void label6_Click(object sender, System.EventArgs e) {
+            Close();
         }
     }
 }
+ 

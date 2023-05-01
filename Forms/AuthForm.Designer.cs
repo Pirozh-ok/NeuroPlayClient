@@ -123,8 +123,8 @@
             // btnStart
             // 
             this.btnStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(115)))), ((int)(((byte)(115)))));
-            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnStart.ForeColor = System.Drawing.Color.White;
             this.btnStart.Location = new System.Drawing.Point(182, 361);
             this.btnStart.Name = "btnStart";
@@ -226,7 +226,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Roboto", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(179, 29);
+            this.label7.Location = new System.Drawing.Point(181, 21);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(224, 39);
             this.label7.TabIndex = 20;

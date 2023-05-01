@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label1.Text" xml:space="preserve">
-    <value>Случайным образом формируется задание на 
+    <value>    Случайным образом формируется задание на 
 простые арифметические вычисления с результатом не превосходящим 100. 
 Необходимо вычислить результат. Если он получился чётным, следует 
 нажать клавишу «пробел». В противном случае ничего делать не надо».</value>
