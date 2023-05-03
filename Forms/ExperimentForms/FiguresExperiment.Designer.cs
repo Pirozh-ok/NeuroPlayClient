@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FiguresExperiment));
             this.pbImage = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
@@ -59,6 +60,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.pbImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "FiguresExperiment";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

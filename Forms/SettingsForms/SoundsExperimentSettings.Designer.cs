@@ -176,7 +176,9 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SoundsExperimentSettings";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Род существительного";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SoundsExperimentSettings_FormClosed);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SoundsExperimentSettings_KeyDown);

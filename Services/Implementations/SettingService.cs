@@ -1,7 +1,6 @@
 ﻿using NeuroPlayClient.Models;
-using NeuroPlayClient.Properties;
 using NeuroPlayClient.Services.Interfaces;
-using System.Threading.Tasks;
+using System;
 
 namespace NeuroPlayClient.Services.Implementations {
     public class SettingService : ISettingsService {
@@ -16,9 +15,9 @@ namespace NeuroPlayClient.Services.Implementations {
         }
 
         public ServiceResult<string> GetSettingsToString() {
-            return new ServiceResult<string>(true, $"{_userSettings.ExperimentId} {_userSettings.Name} {_userSettings.Age} {_userSettings.UserType} {_userSettings.Case}");
+            return new ServiceResult<string>(true, $"{_userSettings.ExperimentId} {_userSettings.Name} {_userSettings.Age} {_userSettings.UserType} {_userSettings.Case} {DateTime.Now.ToLongDateString()} {DateTime.Now.ToShortTimeString()}");
         }
-
+        
         public ServiceResult IncrementIdExperiment() {
             _userSettings.ExperimentId = (int.Parse(_userSettings.ExperimentId)+1).ToString();
             return new ServiceResult(true);

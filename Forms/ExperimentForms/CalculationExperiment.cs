@@ -29,6 +29,8 @@ namespace NeuroPlayClient.Forms.ExperimentForms {
             _settings = settings;
             _settingsService = settingsService;
             _authForm = authForm;
+
+            lblCalculationTask.Text = string.Empty;
         }
 
         private async Task StartExperiment() {

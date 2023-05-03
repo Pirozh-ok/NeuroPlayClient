@@ -42,9 +42,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(245)))), ((int)(((byte)(242)))));
-            this.panel1.Location = new System.Drawing.Point(47, 102);
+            this.panel1.Location = new System.Drawing.Point(22, 102);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(807, 297);
+            this.panel1.Size = new System.Drawing.Size(856, 297);
             this.panel1.TabIndex = 1;
             // 
             // label6
@@ -69,6 +69,7 @@
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "CalculationExperiment";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Эксперимент \"Арифметические вычисления\"";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CalculationExperiment_FormClosing);
             this.Load += new System.EventHandler(this.CalculationExperiment_Load);
