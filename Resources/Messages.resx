@@ -148,13 +148,16 @@
     <value>Некорректное значение типа! Пожалуйста, выберите значение из выпадающего списка</value>
   </data>
   <data name="IsNotConnected" xml:space="preserve">
-    <value>Не удалось установить соединение к серверу NeuroPlay. Подключитесь к устройству и повторите попытку!</value>
+    <value>Не удалось установить соединение с сервером. Запустите NeuroPlay и повторите попытку!</value>
   </data>
   <data name="LoggerCloseError" xml:space="preserve">
     <value>Не удалось закрыть файл для записи логов</value>
   </data>
   <data name="LoggerConnectError" xml:space="preserve">
     <value>Не удалось открыть файл для записи логов</value>
+  </data>
+  <data name="NotConnectedDevice" xml:space="preserve">
+    <value>Соединение с сервером установлено успешно, но не удалось найти подключённое устройтво. Подключите нейрогарнитуру в NeuroPlay и повторите попытку!</value>
   </data>
   <data name="RedImagePath" xml:space="preserve">
     <value>../../Images/red-circle.png</value>

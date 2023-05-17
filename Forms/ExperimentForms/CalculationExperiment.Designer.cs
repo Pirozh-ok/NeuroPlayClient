@@ -23,9 +23,11 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculationExperiment));
             this.lblCalculationTask = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblCalculationTask
@@ -33,7 +35,7 @@
             this.lblCalculationTask.AutoSize = true;
             this.lblCalculationTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(245)))), ((int)(((byte)(242)))));
             this.lblCalculationTask.Font = new System.Drawing.Font("Roboto Medium", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblCalculationTask.Location = new System.Drawing.Point(201, 178);
+            this.lblCalculationTask.Location = new System.Drawing.Point(146, 73);
             this.lblCalculationTask.Name = "lblCalculationTask";
             this.lblCalculationTask.Size = new System.Drawing.Size(504, 144);
             this.lblCalculationTask.TabIndex = 0;
@@ -42,6 +44,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(245)))), ((int)(((byte)(242)))));
+            this.panel1.Controls.Add(this.lblCalculationTask);
             this.panel1.Location = new System.Drawing.Point(22, 102);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(856, 297);
@@ -65,15 +68,17 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(115)))), ((int)(((byte)(115)))));
             this.ClientSize = new System.Drawing.Size(900, 500);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.lblCalculationTask);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CalculationExperiment";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Эксперимент \"Арифметические вычисления\"";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CalculationExperiment_FormClosing);
             this.Load += new System.EventHandler(this.CalculationExperiment_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CalculationExperiment_KeyDown);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

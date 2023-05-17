@@ -26,10 +26,13 @@ namespace NeuroPlayClient.Services {
         }
 
         public async Task StopRecordAsync() {
-            using (var client = new HttpClient()) {
-                var response = await client.GetAsync(@"http://127.0.0.1:2336/stopRecord");
-                var result = JsonConvert.DeserializeObject<StopRecordResponse>(await response.Content.ReadAsStringAsync());
+            try {
+                using (var client = new HttpClient()) {
+                    var response = await client.GetAsync(@"http://127.0.0.1:2336/stopRecord");
+                    var result = JsonConvert.DeserializeObject<StopRecordResponse>(await response.Content.ReadAsStringAsync());
+                }
             }
+            catch { }
         }
 
         public async Task<string> AddMarkerAsync(string position, string text) {

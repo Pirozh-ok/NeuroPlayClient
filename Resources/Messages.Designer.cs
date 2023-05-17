@@ -151,7 +151,7 @@ namespace NeuroPlayClient.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Не удалось установить соединение к серверу NeuroPlay. Подключитесь к устройству и повторите попытку!.
+        ///   Ищет локализованную строку, похожую на Не удалось установить соединение с сервером. Запустите NeuroPlay и повторите попытку!.
         /// </summary>
         public static string IsNotConnected {
             get {
@@ -174,6 +174,15 @@ namespace NeuroPlayClient.Resources {
         public static string LoggerConnectError {
             get {
                 return ResourceManager.GetString("LoggerConnectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Соединение с сервером установлено успешно, но не удалось найти подключённое устройтво. Подключите нейрогарнитуру в NeuroPlay и повторите попытку!.
+        /// </summary>
+        public static string NotConnectedDevice {
+            get {
+                return ResourceManager.GetString("NotConnectedDevice", resourceCulture);
             }
         }
         

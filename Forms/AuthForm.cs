@@ -33,7 +33,9 @@ namespace NeuroPlayClient {
         }
 
         private async void btnStart_Click(object sender, EventArgs e) {
-            if (await NeuroPlayIsConected() && CheckUserData()) {
+            CheckUserData();
+
+            if (await NeuroPlayIsConected()) {
                 Enum.TryParse(cbUserType.Text, out UserType userType);
                 var userData = new User(tbUserId.Text, tbUserName.Text, (uint)numAge.Value, userType);
 
@@ -51,6 +53,14 @@ namespace NeuroPlayClient {
                     userSettings.RememberMe = true;
                     SaveUserData(userSettings);
                 }
+                else SaveUserData(new UserSettings() {
+                    ExperimentId = userData.ExperimentId,
+                    Name = string.Empty,
+                    Age = Convert.ToUInt32(numAge.Minimum),
+                    UserType = "Начальный",
+                    Case = FiguresExperiment,
+                    RememberMe = false
+                });
 
                 Hide();
                 switch (cbCase.Text) {
@@ -71,14 +81,12 @@ namespace NeuroPlayClient {
                         }
                 }
             }
+            else {
+                MessageBox.Show(Messages.NotConnectedDevice);
+            }
         }
 
         private bool CheckUserData() {
-            if (string.IsNullOrEmpty(tbUserId.Text) || string.IsNullOrWhiteSpace(tbUserId.Text)) {
-                ShowError(Messages.IncorrectUserId);
-                return false;
-            }
-
             if (string.IsNullOrEmpty(tbUserName.Text) || string.IsNullOrWhiteSpace(tbUserName.Text)) {
                 ShowError(Messages.IncorrectUserName);
                 return false;
